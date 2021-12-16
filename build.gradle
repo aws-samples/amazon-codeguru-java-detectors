@@ -11,3 +11,16 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/java'
+        }
+    }
+}
+
+dependencies {
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+}
+
