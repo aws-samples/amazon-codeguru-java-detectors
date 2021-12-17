@@ -67,8 +67,8 @@ jobs:
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        name: codeguru-results-summary-txt
-        path: codeguru-results-summary.txt
+        name: codeguru-results-summary-json
+        path: codeguru-results-summary.json
 
     ####### Here we should post the results as a PR comment.
 
@@ -83,7 +83,7 @@ jobs:
         append: true
         header: Findings from CodeGuru Reviewer analysis
         number: ${{ steps.findpr.outputs.pr }}
-        path: codeguru-results-summary.txt
+        path: codeguru-results-summary.json
 
     ### This works, but apparently only supports string, not file.
 
