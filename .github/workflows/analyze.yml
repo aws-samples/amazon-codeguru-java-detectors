@@ -57,11 +57,11 @@ jobs:
         name: codeguru-results-sarif-json
         path: codeguru-results.sarif.json
 
-    - name: Save summarized analysis results to a txt artifact
+    - name: Save ultra-summarized analysis results to a json artifact
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
-        jq '.runs[0].results[] | {ruleId: .ruleId, firstUri: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(" ")' \
-          codeguru-results.sarif.json > codeguru-results-summary.txt
+        jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine}' \
+          codeguru-results.sarif.json > codeguru-results-summary.json
 
     - name: Upload summary of analysis results as workflow artifact
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
@@ -76,7 +76,7 @@ jobs:
       uses: jwalton/gh-find-current-pr@v1
       id: findpr
     
-    - name: Add comment to current PR with summary of analysis results
+    - name: Add summary of analysis results as a comment on current PR
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
