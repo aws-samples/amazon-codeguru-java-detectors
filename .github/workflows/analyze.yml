@@ -5,7 +5,8 @@ on: [push]
 permissions:
   id-token: write
   contents: read
-  security-events: write 
+  security-events: write
+  issues: write
 
 jobs:
   build:
@@ -69,6 +70,15 @@ jobs:
         path: codeguru-results-summary.txt
 
     ####### Here we should post the results as a PR comment.
+
+    # Let's retry now that we added the issues: write permission.
+    - name: Add comment to PR with summary of analysis results
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        number: ${{ github.event.number }}
+        path: codeguru-results-summary.txt
+
 
     ### This works, but apparently only supports string, not file.
 
