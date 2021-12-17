@@ -62,8 +62,8 @@ jobs:
       run: |
         jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine}' \
           codeguru-results.sarif.json > codeguru-results-summary.json
-        jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join("  ")' \
-          codeguru-results.sarif.json | sed 's/^"//;s/"$//' > codeguru-results-ultra-summary.txt
+        jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join("  ")' \
+          codeguru-results.sarif.json > codeguru-results-ultra-summary.txt
 
     - name: Upload summarized results to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
