@@ -1,4 +1,4 @@
-name: Analyze with CodeGuru Reviewer
+name: Analyze with CodeGuru
 
 on: [push]
 
@@ -57,33 +57,42 @@ jobs:
         name: codeguru-results-sarif-json
         path: codeguru-results.sarif.json
 
-    - name: Save ultra-summarized analysis results to a json artifact
+    - name: Save summarized analysis results to json and txt files
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
+        # Summary in JSON format (easier to read than full SARIF)
         jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine}' \
           codeguru-results.sarif.json > codeguru-results-summary.json
+        # Ultra-summary in txt format (for PR comment, with one row per finding)
+        jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join("  ")' \
+          codeguru-results.sarif.json | sed 's/^"//;s/"$//' > codeguru-results-ultra-summary.txt
 
-    - name: Upload summary of analysis results as workflow artifact
+    - name: Save summarized results as workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: actions/upload-artifact@v2
-      with:
-        name: codeguru-results-summary-json
-        path: codeguru-results-summary.json
+      - uses: actions/upload-artifact@v2
+        with:
+          name: codeguru-results-summary-json
+          path: codeguru-results-summary.json
+      - uses: actions/upload-artifact@v2
+        with:
+          name: codeguru-results-ultra-summary-txt
+          path: codeguru-results-ultra-summary.txt
 
-    - name: Find out the number of the current PR
+    - name: Find the number of the current PR
       uses: jwalton/gh-find-current-pr@v1
       id: findpr
     
-    - name: Add analysis results summary as a comment on current PR
+    - name: Add a comment to the current PR with summary of analysis results
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         append: false
         header: codeguru-findings
         number: ${{ steps.findpr.outputs.pr }}
+        path: codeguru-results-ultra-summary.txt
+        # message does not seem to be displayed in comment when `path` option is used.
         message: |
           Summary of findings from CodeGuru Reviewer (more details in workflow artifacts)
-        path: codeguru-results-summary.json
 
     ####### Uploading to GitHub's code scan results UX will only work once the repo is public.
 
