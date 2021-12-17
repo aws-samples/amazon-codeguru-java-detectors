@@ -70,51 +70,20 @@ jobs:
         name: codeguru-results-summary-json
         path: codeguru-results-summary.json
 
-    ####### Here we should post the results as a PR comment.
-
     - name: Find out the number of the current PR
       uses: jwalton/gh-find-current-pr@v1
       id: findpr
     
-    - name: Add summary of analysis results as a comment on current PR
+    - name: Add analysis results summary as a comment on current PR
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        append: true
-        header: Findings from CodeGuru Reviewer analysis
+        append: false
+        header: codeguru-findings
         number: ${{ steps.findpr.outputs.pr }}
+        message: |
+          Summary of findings from CodeGuru Reviewer (more details in workflow artifacts)
         path: codeguru-results-summary.json
-
-    ### This works, but apparently only supports string, not file.
-
-    # - name: Add comment to PR with summary of analysis results
-    # if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-    # uses: mshick/add-pr-comment@v1
-    # with:
-    #   message: |
-    #     Testing -- adding comment to PR.
-
-    ### This didn't work. The PR number is apparently required by this action and not found this way.
-
-    # - name: Add comment to PR with summary of analysis results
-    #   if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-    #   uses: marocchino/sticky-pull-request-comment@v2
-    #   with:
-    #     number: ${{ github.event.number }}
-    #     path: codeguru-results-summary.txt
-
-    ### This approach didn't work either so far.
-
-    # - uses: jwalton/gh-find-current-pr@v1
-    #   id: find-current-pr
-    #
-    # - name: Add comment to PR with summary of analysis results
-    #   if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success' && steps.find-current-pr.outcome == 'success'
-    #   uses: marocchino/sticky-pull-request-comment@v2
-    #   with:
-    #     number: ${{ steps.find-current-pr.outputs.pr }}
-    #     path: codeguru-results-summary.txt
-
 
     ####### Uploading to GitHub's code scan results UX will only work once the repo is public.
 
