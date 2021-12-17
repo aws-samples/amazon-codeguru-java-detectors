@@ -58,7 +58,7 @@ jobs:
     - name: Summarize analysis results
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
-        jq '.[] | {RuleId: .RuleMetadata.RuleId, FilePath: .FilePath, LineNumber: .StartLine} | select(.FilePath != ".") | join(" ")' ./codeguru-results.sarif.json > codeguru-results-summary.txt
+        jq '.runs[0].results[] | {ruleId: .ruleId, firstUri: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(" ")' ./codeguru-results.sarif.json > codeguru-results-summary.txt
 
     - name: Upload summary of analysis results as workflow artifact
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
