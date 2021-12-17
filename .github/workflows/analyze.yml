@@ -48,39 +48,65 @@ jobs:
         s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
         build_path: ./build/classes
 
-    - name: Upload analysis results as workflow artifact
+    - name: Save full analysis results as a SARIF artifact
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
         name: codeguru-results-sarif-json
-        path: ./codeguru-results.sarif.json
+        path: codeguru-results.sarif.json
 
-    - name: Summarize analysis results
+    - name: Summarize analysis results to a txt artifact
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
-        jq '.runs[0].results[] | {ruleId: .ruleId, firstUri: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(" ")' ./codeguru-results.sarif.json > codeguru-results-summary.txt
+        jq '.runs[0].results[] | {ruleId: .ruleId, firstUri: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(" ")' \
+          codeguru-results.sarif.json > codeguru-results-summary.txt
 
     - name: Upload summary of analysis results as workflow artifact
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
         name: codeguru-results-summary-txt
-        path: ./codeguru-results-summary.txt
+        path: codeguru-results-summary.txt
+
+    ####### Here we should post the results as a PR comment.
+
+    ### This works, but apparently only supports string, not file.
+
+    # - name: Add comment to PR with summary of analysis results
+    # if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+    # uses: mshick/add-pr-comment@v1
+    # with:
+    #   message: |
+    #     Testing -- adding comment to PR.
+
+    ### This didn't work. The PR number is apparently required by this action and not found this way.
+
+    # - name: Add comment to PR with summary of analysis results
+    #   if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+    #   uses: marocchino/sticky-pull-request-comment@v2
+    #   with:
+    #     number: ${{ github.event.number }}
+    #     path: codeguru-results-summary.txt
+
+    ### This approach didn't work either so far.
 
     # - uses: jwalton/gh-find-current-pr@v1
     #   id: find-current-pr
-
-    - name: Add comment to PR with summary of analysis results
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: marocchino/sticky-pull-request-comment@v2
-      with:
-        number: ${{ github.event.number }}
-        path: ./codeguru-results-summary.txt
-
-    ###### This won't work until repo is public
     #
+    # - name: Add comment to PR with summary of analysis results
+    #   if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success' && steps.find-current-pr.outcome == 'success'
+    #   uses: marocchino/sticky-pull-request-comment@v2
+    #   with:
+    #     number: ${{ steps.find-current-pr.outputs.pr }}
+    #     path: codeguru-results-summary.txt
+
+
+    ####### Uploading to GitHub's code scan results UX will only work once the repo is public.
+
     # - name: Upload analysis results to be shown on the GitHub Security Scans UX
     #   if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
     #   uses: github/codeql-action/upload-sarif@v1
     #   with:
     #     sarif_file: codeguru-results.sarif.json
+
+
