@@ -40,7 +40,7 @@ jobs:
         chmod +x gradlew
         ./gradlew build
 
-    - name: CodeGuru Reviewer
+    - name: Run CodeGuru Reviewer
       id: analysis
       uses: aws-actions/codeguru-reviewer@v1.1
       if: steps.assume-iam-role.outcome == 'success'
@@ -56,7 +56,7 @@ jobs:
         name: codeguru-results-sarif-json
         path: codeguru-results.sarif.json
 
-    - name: Summarize analysis results to a txt artifact
+    - name: Save summarized analysis results to a txt artifact
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
         jq '.runs[0].results[] | {ruleId: .ruleId, firstUri: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(" ")' \
@@ -71,14 +71,17 @@ jobs:
 
     ####### Here we should post the results as a PR comment.
 
-    # Let's retry now that we added the issues: write permission.
+    - uses: jwalton/gh-find-current-pr@v1
+      id: findpr
+    
     - name: Add comment to PR with summary of analysis results
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success' && steps.find-current-pr.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        number: ${{ github.event.number }}
+        append: true
+        header: Findings from CodeGuru Reviewer analysis
+        number: ${{ steps.findpr.outputs.pr }}
         path: codeguru-results-summary.txt
-
 
     ### This works, but apparently only supports string, not file.
 
