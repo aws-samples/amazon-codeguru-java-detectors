@@ -50,24 +50,22 @@ jobs:
         s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
         build_path: ./build/classes
 
-    - name: Save full analysis results as a SARIF artifact
+    - name: Upload full analysis results (SARIF format) to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
         name: codeguru-results-sarif-json
         path: codeguru-results.sarif.json
 
-    - name: Save summarized analysis results to json and txt files
+    - name: Save results summary and ultra-summary to files on local disk
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
-        # Summary in JSON format (easier to read than full SARIF)
         jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine}' \
           codeguru-results.sarif.json > codeguru-results-summary.json
-        # Ultra-summary in txt format (for PR comment, with one row per finding)
         jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join("  ")' \
           codeguru-results.sarif.json | sed 's/^"//;s/"$//' > codeguru-results-ultra-summary.txt
 
-    - name: Save summarized results as workflow artifacts
+    - name: Upload summarized results to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       - uses: actions/upload-artifact@v2
         with:
