@@ -77,7 +77,7 @@ jobs:
       id: findpr
     
     - name: Add comment to current PR with summary of analysis results
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success' && steps.find-current-pr.outcome == 'success'
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         append: true
