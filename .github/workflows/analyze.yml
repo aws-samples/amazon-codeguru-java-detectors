@@ -65,16 +65,19 @@ jobs:
         jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join("  ")' \
           codeguru-results.sarif.json > codeguru-results-ultra-summary.txt
 
-    - name: Upload summarized results to workflow artifacts
+    - name: Upload results summary to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      - uses: actions/upload-artifact@v2
-        with:
-          name: codeguru-results-summary-json
-          path: codeguru-results-summary.json
-      - uses: actions/upload-artifact@v2
-        with:
-          name: codeguru-results-ultra-summary-txt
-          path: codeguru-results-ultra-summary.txt
+      uses: actions/upload-artifact@v2
+      with:
+        name: codeguru-results-summary-json
+        path: codeguru-results-summary.json
+
+    - name: Upload results ultra-summary to workflow artifacts
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: actions/upload-artifact@v2
+      with:
+        name: codeguru-results-ultra-summary-txt
+        path: codeguru-results-ultra-summary.txt
 
     - name: Find the number of the current PR
       uses: jwalton/gh-find-current-pr@v1
