@@ -69,10 +69,9 @@ jobs:
 
     - name: Add comment to PR with summary of analysis results
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: mshick/add-pr-comment@v1
+      uses: marocchino/sticky-pull-request-comment@v2
       with:
-        message: |
-          Testing -- adding comment to PR.
+        path: ./codeguru-results-summary.txt
 
     ###### This won't work until repo is public
     #
