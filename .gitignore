@@ -9,4 +9,5 @@
 *.iml
 
 build/
+lib/
 .DS_Store
