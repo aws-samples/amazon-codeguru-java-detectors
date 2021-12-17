@@ -67,14 +67,14 @@ jobs:
         name: codeguru-results-summary-txt
         path: ./codeguru-results-summary.txt
 
-    - uses: jwalton/gh-find-current-pr@v1
-      id: find-current-pr
+    # - uses: jwalton/gh-find-current-pr@v1
+    #   id: find-current-pr
 
     - name: Add comment to PR with summary of analysis results
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        number: ${{ steps.find-current-pr.outputs.pr }}
+        number: ${{ github.event.number }}
         path: ./codeguru-results-summary.txt
 
     ###### This won't work until repo is public
