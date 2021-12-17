@@ -20,7 +20,8 @@ jobs:
         role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
         aws-region: us-west-2
     
-    - uses: actions/checkout@v2
+    - name: Check out repository
+      uses: actions/checkout@v2
       if: steps.assume-iam-role.outcome == 'success'
       with:
         fetch-depth: 0
@@ -31,16 +32,15 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-
-    - name: Grant execute permission to gradlew
-      if: steps.assume-iam-role.outcome == 'success'
-      run: chmod +x gradlew
     
     - name: Build project with Gradle
       if: steps.assume-iam-role.outcome == 'success'
-      run: ./gradlew build
+      run: |
+        chmod +x gradlew
+        ./gradlew build
 
     - name: CodeGuru Reviewer
+      id: analysis
       uses: aws-actions/codeguru-reviewer@v1.1
       if: steps.assume-iam-role.outcome == 'success'
       continue-on-error: false
@@ -48,15 +48,36 @@ jobs:
         s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
         build_path: ./build/classes
 
-    - name: Store SARIF file
-      if: steps.assume-iam-role.outcome == 'success'
+    - name: Upload analysis results as workflow artifact
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        name: SARIF_recommendations
+        name: codeguru-results-sarif-json
         path: ./codeguru-results.sarif.json
 
-    - name: Upload review result
-      if: steps.assume-iam-role.outcome == 'success'
-      uses: github/codeql-action/upload-sarif@v1
+    - name: Summarize analysis results
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      run: |
+        jq '.[] | {RuleId: .RuleMetadata.RuleId, FilePath: .FilePath, LineNumber: .StartLine} | select(.FilePath != ".") | join(" ")' ./codeguru-results.sarif.json > codeguru-results-summary.txt
+
+    - name: Upload summary of analysis results as workflow artifact
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: actions/upload-artifact@v2
       with:
-        sarif_file: codeguru-results.sarif.json
+        name: codeguru-results-summary-txt
+        path: ./codeguru-results-summary.txt
+
+    - name: Add comment to PR with summary of analysis results
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: mshick/add-pr-comment@v1
+      with:
+        message: |
+          Testing -- adding comment to PR.
+
+    ###### This won't work until repo is public
+    #
+    # - name: Upload analysis results to be shown on the GitHub Security Scans UX
+    #   if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+    #   uses: github/codeql-action/upload-sarif@v1
+    #   with:
+    #     sarif_file: codeguru-results.sarif.json
