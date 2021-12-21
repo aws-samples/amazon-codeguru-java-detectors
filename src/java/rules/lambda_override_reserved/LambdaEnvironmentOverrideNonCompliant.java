@@ -21,7 +21,7 @@ public class LambdaEnvironmentOverrideNonCompliant implements RequestHandler<API
         return null;
     }
 
-    // {fact rule=<lambda-override-reserved@v1.0> defects=1}
+    // {fact rule=lambda-override-reserved@v1.0 defects=1}
     private void overrideEnvironmentNonCompliant() {
         final Map<String, String> environment = new ProcessBuilder().environment();
         // Noncompliant: overrides reserved environment variable names in a Lambda function.

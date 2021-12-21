@@ -21,7 +21,7 @@ public class LambdaEnvironmentOverrideCompliant implements RequestHandler<APIGat
         return null;
     }
 
-    // {fact rule=<lambda-override-reserved@v1.0> defects=0}
+    // {fact rule=lambda-override-reserved@v1.0 defects=0}
     private void overrideEnvironmentCompliant() {
         final Map<String, String> environment = new ProcessBuilder().environment();
         // Compliant: overrides an unreserved environment variable name in a AWS Lambda function.

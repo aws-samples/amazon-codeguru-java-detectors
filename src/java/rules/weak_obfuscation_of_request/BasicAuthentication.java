@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.Base64;
 
 public class BasicAuthentication {
-    // {fact rule=<weak-obfuscation-of-request@v1.0> defects=1}
+    // {fact rule=weak-obfuscation-of-request@v1.0 defects=1}
     public void setHeaderNonCompliant(final URL url, final String password) throws URISyntaxException {
         final String encoding = Base64.getEncoder().encode(password.getBytes()).toString();
         HttpPost httppost = new HttpPost(url.toURI());
