@@ -26,14 +26,6 @@ dependencies {
     implementation("org.apache.httpcomponents:httpclient:4.5.13")
     implementation("org.slf4j:slf4j-api:1.7.32")
     implementation("org.opensaml:xmltooling:1.4.4")
-<<<<<<< HEAD
-    implementation("com.amazonaws:aws-java-sdk:1.12.129")
     implementation("com.amazonaws:aws-lambda-java-core:1.0.0")
     implementation("com.amazonaws:aws-lambda-java-events:3.0.0")
-
-
-=======
-    implementation("com.amazonaws:aws-lambda-java-core:1.0.0")
-    implementation("com.amazonaws:aws-lambda-java-events:3.0.0")
->>>>>>> 82e1e6f (Added examples of java/resource-leak@v1.0, java/weak-obfuscation-of-request@v1.0, java/lambda-override-reserved@v1.0, java/incorrect-authentication-exploitation@v1.0, java/insecure-cors-policy@v1.0 including additional dependencies)
 }
