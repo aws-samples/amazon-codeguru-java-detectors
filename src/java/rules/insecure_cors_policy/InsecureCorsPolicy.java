@@ -7,7 +7,7 @@ package rules.insecure_cors_policy;
 
 import javax.servlet.http.HttpServletResponse;
 
-public class CorsTest {
+public class InsecureCorsPolicy {
     // {fact rule=insecure-cors-policy@v1.0 defects=1}
     public void corsEnabledNonCompliant(HttpServletResponse response) {
         // Noncompliant: the Access-Control-Allow-Origin is set to allow any domain.

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
-public class OpenResource {
+public class ResourceLeak {
     // {fact rule=resource-leak@v1.0 defects=1}
     public List<Path> streamFilesNonCompliant(final Path path) throws Exception {
         final List<Path> files;
