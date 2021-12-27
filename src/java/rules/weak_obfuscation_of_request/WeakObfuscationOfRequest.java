@@ -13,7 +13,7 @@ import java.util.Base64;
 
 public class WeakObfuscationOfRequest {
     // {fact rule=weak-obfuscation-of-request@v1.0 defects=1}
-    public void setHeaderNonCompliant(final URL url, final String password) throws URISyntaxException {
+    public void httpAuthenticationNonCompliant(final URL url, final String password) throws URISyntaxException {
         final String encoding = Base64.getEncoder().encode(password.getBytes()).toString();
         HttpPost httppost = new HttpPost(url.toURI());
         // Noncompliant: uses HTTP Basic Authentication.

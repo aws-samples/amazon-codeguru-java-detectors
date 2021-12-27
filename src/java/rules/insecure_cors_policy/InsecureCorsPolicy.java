@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public class InsecureCorsPolicy {
     // {fact rule=insecure-cors-policy@v1.0 defects=1}
-    public void corsEnabledNonCompliant(HttpServletResponse response) {
+    public void allowOriginNonCompliant(HttpServletResponse response) {
         // Noncompliant: the Access-Control-Allow-Origin is set to allow any domain.
         response.setHeader("Access-Control-Allow-Origin", "*");
     }
     // {/fact}
 
     // {fact rule=insecure-cors-policy@v1.0 defects=0}
-    public void corsEnabledCompliant(HttpServletResponse response) {
+    public void allowOriginCompliant(HttpServletResponse response) {
         // Compliant: the Access-Control-Allow-Origin is set to allow only a specific list of trusted domains.
         response.setHeader("Access-Control-Allow-Origin", "mytrustedsite.com");
     }

@@ -13,7 +13,7 @@ import java.util.Map;
 public class LambdaOverrideReservedCompliant implements RequestHandler<String, Void> {
     public Void handleRequest(String requestEvent, Context context) {
         final Map<String, String> environment = new ProcessBuilder().environment();
-        // Compliant: overrides an unreserved environment variable name in a AWS Lambda function.
+        // Compliant: does not override any reserved environment variable names in a Lambda function.
         environment.put("LANG", "en_US.UTF-8");
         return null;
     }
