@@ -3,6 +3,7 @@
 
 plugins {
     id 'java'
+    id "io.freefair.lombok" version "6.3.0"
 }
 
 group 'org.example'
@@ -22,4 +23,6 @@ sourceSets {
 
 dependencies {
     implementation("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("org.slf4j:slf4j-api:1.7.32")
+    implementation("org.opensaml:xmltooling:1.4.4")
 }
