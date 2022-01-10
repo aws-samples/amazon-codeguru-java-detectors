@@ -71,8 +71,10 @@ jobs:
       run: |
         jq '[ .[] | {RuleId: .RuleMetadata.RuleId, File: .FilePath, Line: .StartLine} ]' \
           code-guru/recommendations.json > code-guru/recommendations-summary.json
+        echo "Recommendations" > code-guru/recommendations-summary-table.txt
+        echo "ruleId filePath lineNumber" >> code-guru/recommendations-summary-table.txt
         jq -r '.[] | {RuleId: .RuleMetadata.RuleId, File: .FilePath, Line: .StartLine} | join(" ")' \
-          code-guru/recommendations.json | sort > code-guru/recommendations-summary-table.txt
+          code-guru/recommendations.json | sort >> code-guru/recommendations-summary-table.txt
 
     - name: Upload JSON summary of results to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
@@ -101,7 +103,7 @@ jobs:
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        append: false
+        append: true
         header: codeguru-findings
         number: ${{ steps.findpr.outputs.pr }}
         path: code-guru/recommendations-summary-table.txt
