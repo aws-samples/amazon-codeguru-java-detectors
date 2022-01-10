@@ -103,7 +103,7 @@ jobs:
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        append: true
+        append: false
         header: codeguru-findings-java11
         number: ${{ steps.findpr.outputs.pr }}
         path: code-guru/recommendations-summary-table.txt
