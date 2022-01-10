@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-name: Analyze with CodeGuru CLI (Java 11)
+name: Reviewer CLI (Java 11)
 
 on: [pull_request]
 
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    name: Analyze with CodeGuru Reviewer CLI (Java 11)
+    name: Reviewer CLI (Java 11)
     runs-on: ubuntu-latest
     steps:
     - name: Assume IAM role
