@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-name: Analyze with CodeGuru CLI
+name: Analyze with CodeGuru CLI (Java 11)
 
-on: [push]
+on: [push, pull_request]
 
 permissions:
   id-token: write
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    name: Analyze with CodeGuru Reviewer CLI
+    name: Analyze with CodeGuru Reviewer CLI (Java 11)
     runs-on: ubuntu-latest
     steps:
     - name: Assume IAM role
@@ -33,7 +33,7 @@ jobs:
       with:
         fetch-depth: 0
         
-    - name: Set up JDK
+    - name: Set up JDK v11
       if: steps.assume-iam-role.outcome == 'success'
       uses: actions/setup-java@v2
       with:
