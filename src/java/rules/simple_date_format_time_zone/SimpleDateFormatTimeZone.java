@@ -12,18 +12,18 @@ public class SimpleDateFormatTimeZone {
     // {fact rule=simple-date-format-time-zone@v1.0 defects=1}
     void setTimezoneNonCompliant() {
         // Noncompliant: does not set the timezone while using a 'SimpleDateFormat' object.
-        use(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        doSomething(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     }
     // {/fact}
 
     // {fact rule=simple-date-format-time-zone@v1.0 defects=0}
     void setTimezoneCompliant() {
         // Compliant: sets the timezone while using a 'SimpleDateFormat' object.
-        use(new SimpleDateFormat("yyyy-MM-dd'Z'").format(new Date()));
+        doSomething(new SimpleDateFormat("yyyy-MM-dd'Z'").format(new Date()));
     }
     // {/fact}
 
-    void use(String date) {
+    void doSomething(String date) {
         // do-something
     }
 }
