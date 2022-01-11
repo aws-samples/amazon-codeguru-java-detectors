@@ -5,7 +5,6 @@
 
 package rules.sensitive_information_leak;
 
-import stubs.RedactionUtil;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Map;
 
@@ -14,8 +13,7 @@ public class SensitiveInformationLeak {
     // {fact rule=sensitive-information-leak@v1.0 defects=1}
     public void processResponseNonCompliant(Map<String, String> response) {
         final String name = response.get("Name");
-        String redacted = RedactionUtil.redact(name);
-        // Noncompliant: fails logging redacted sensitive information resulting in a possible sensitive information leak.
+        // Noncompliant: logs sensitive data without redaction resulting in a possible sensitive information leak.
         log.info(name);
     }
     // {/fact}
@@ -23,9 +21,13 @@ public class SensitiveInformationLeak {
     // {fact rule=sensitive-information-leak@v1.0 defects=0}
     public void processResponseCompliant(Map<String, String> response) {
         final String name = response.get("Name");
-        String redacted = RedactionUtil.redact(name);
-        // Compliant: ensures logging redacted sensitive information preventing in a possible sensitive information leak.
+        String redacted = redact(name);
+        // Compliant: sensitive data is passed through redaction before logging, preventing possible sensitive information leak.
         log.info(redacted);
     }
     // {/fact}
+
+    String redact (String name) {
+        return name.replaceAll("[^a-zA-Z]", "");
+    }
 }

@@ -14,7 +14,7 @@ public class InfiniteLoop {
     // {fact rule=infinte-loop@v1.0 defects=1}
     public String loopControlNonCompliant() {
         ResultClass resultClass = new ResultClass();
-        // Noncompliant: does not have loop control flow to counter exceptional behavior.
+        // Noncompliant: does not have loop control flow to prevent an infinite loop.
         for ( ; ; ) {
             try {
                 String result = resultClass.getResult();
@@ -29,7 +29,7 @@ public class InfiniteLoop {
     // {fact rule=infinte-loop@v1.0 defects=0}
     public String loopControlCompliant() {
         ResultClass resultClass = new ResultClass();
-        // Compliant: has loop control flow to counter exceptional behavior.
+        // Compliant: has loop control flow to prevent an infinite loop.
         for (int i = 0; i < 10; ++i) {
             try {
                 String result = resultClass.getResult();
