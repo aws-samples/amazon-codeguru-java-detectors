@@ -1,5 +1,5 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: MIT-0
+// SPDX-License-Identifier: Apache-2.0
 
 plugins {
     id 'java'
@@ -23,6 +23,9 @@ sourceSets {
 
 dependencies {
     implementation("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("org.apache.httpcomponents:httpclient:4.5.13")
     implementation("org.slf4j:slf4j-api:1.7.32")
     implementation("org.opensaml:xmltooling:1.4.4")
+    implementation("com.amazonaws:aws-lambda-java-core:1.0.0")
 }
+
