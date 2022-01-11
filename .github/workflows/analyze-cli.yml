@@ -1,0 +1,112 @@
+#
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+name: Reviewer CLI
+
+on: [pull_request]
+
+permissions:
+  id-token: write
+  contents: read
+  security-events: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: Reviewer CLI
+    runs-on: ubuntu-latest
+    steps:
+    - name: Assume IAM role
+      id: assume-iam-role
+      continue-on-error: true
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
+        aws-region: us-west-2
+    
+    - name: Check out repository
+      uses: actions/checkout@v2
+      if: steps.assume-iam-role.outcome == 'success'
+      with:
+        fetch-depth: 0
+        
+    - name: Set up JDK
+      if: steps.assume-iam-role.outcome == 'success'
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+
+    - name: Build project with Gradle
+      if: steps.assume-iam-role.outcome == 'success'
+      run: |
+        chmod +x gradlew
+        ./gradlew build
+
+    - name: Unzip CodeGuru Reviewer CLI
+      if: steps.assume-iam-role.outcome == 'success'
+      continue-on-error: false
+      run: |
+        unzip cli/aws-codeguru-cli.zip
+    
+    - name: Analyze whole repo with CodeGuru Reviewer CLI
+      if: steps.assume-iam-role.outcome == 'success'
+      continue-on-error: false
+      id: analysis
+      run: |
+        ./aws-codeguru-cli/bin/aws-codeguru-cli --region us-west-2 --no-prompt -r . -s src -b build/libs
+
+    - name: Upload full analysis results (JSON format) to workflow artifacts
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: actions/upload-artifact@v2
+      with:
+        path: code-guru/recommendations.json
+        name: recommendations.json
+
+    - name: Save summaries of results to files on local disk
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      run: |
+        jq '[ .[] | {RuleId: .RuleMetadata.RuleId, File: .FilePath, Line: .StartLine} ]' \
+          code-guru/recommendations.json > code-guru/recommendations-summary.json
+        echo "Recommendations" > code-guru/recommendations-summary-table.txt
+        echo "ruleId filePath lineNumber" >> code-guru/recommendations-summary-table.txt
+        jq -r '.[] | {RuleId: .RuleMetadata.RuleId, File: .FilePath, Line: .StartLine} | join(" ")' \
+          code-guru/recommendations.json | sort >> code-guru/recommendations-summary-table.txt
+
+    - name: Upload JSON summary of results to workflow artifacts
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: actions/upload-artifact@v2
+      with:
+        path: code-guru/recommendations-summary.json
+        name: recommendations-summary.json
+
+    - name: Upload tabular summary of results to workflow artifacts
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: actions/upload-artifact@v2
+      with:
+        path: code-guru/recommendations-summary-table.txt
+        name: recommendations-summary-table.txt
+
+    - name: Print tabular summary of results to stdout
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      run: |
+        cat code-guru/recommendations-summary-table.txt | column -t
+
+    - name: Find the number of the current PR
+      uses: jwalton/gh-find-current-pr@v1
+      id: findpr
+    
+    - name: Add a comment to the current PR with summary of analysis results
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        append: false
+        header: codeguru-findings
+        number: ${{ steps.findpr.outputs.pr }}
+        path: code-guru/recommendations-summary-table.txt
+        # message does not seem to be displayed in comment when `path` option is used.
+        message: |
+          Summary of findings from CodeGuru Reviewer (more details in workflow artifacts)
