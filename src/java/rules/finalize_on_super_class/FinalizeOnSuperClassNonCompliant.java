@@ -11,16 +11,13 @@ import java.io.IOException;
 // {fact rule=finalize-on-super-class@v1.0 defects=1}
 public class FinalizeOnSuperClassNonCompliant {
     protected abstract class FeedParser {
-
         @Override
         protected abstract void finalize() throws IOException;
-
     }
 
     protected abstract class ETLFeedParser extends FeedParser {
-
         private BufferedReader feedReader;
-        // Noncompliant: does not call super.finalize()
+        // Noncompliant: does not call super.finalize().
         @Override
         protected void finalize() throws IOException {
             feedReader.close();

@@ -20,7 +20,7 @@ public class NotRecommendedApis {
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.US_EAST_1)
                 .build();
-        // Noncompliant: use APIs that are not recommended.
+        // Noncompliant: uses an API that we don't recommend, and a better alternative exists.
         s3Client.initiateMultipartUpload(new InitiateMultipartUploadRequest(bucketName,key));
     }
     // {/fact}

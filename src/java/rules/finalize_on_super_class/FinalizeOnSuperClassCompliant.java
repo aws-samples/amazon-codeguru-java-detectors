@@ -11,25 +11,21 @@ import java.io.IOException;
 // {fact rule=finalize-on-super-class@v1.0 defects=0}
 public class FinalizeOnSuperClassCompliant {
     protected abstract class FeedParser {
-
         @Override
         protected void finalize() throws IOException {
             System.out.println("finalize-class");
         }
-
     }
 
     protected abstract class ETLFeedParserCompliant extends FeedParser {
-
         private BufferedReader feedReader;
-
         @Override
-        // Compliant: calls super.finalize() explicitly
+        // Compliant: calls super.finalize() explicitly.
         protected void finalize() throws IOException {
-            try{
+            try {
                 feedReader.close();
             }
-            finally{
+            finally {
                 super.finalize();
             }
         }

@@ -13,7 +13,7 @@ public class KclWithCallProcessRecords {
 
     // {fact rule=kcl-with-call-process-records@v1.0 defects=1}
     public KinesisClientLibConfiguration configureKCLNonCompliant() {
-        // Noncompliant: avoids setting 'withCallProcessRecordsEvenForEmptyRecordList' to 'TRUE' during Kinesis Client Library (KCL) initialization.
+        // Noncompliant: doesn't set withCallProcessRecordsEvenForEmptyRecordList to true during Kinesis Client Library (KCL) initialization.
         KinesisClientLibConfiguration kclConfig = new KinesisClientLibConfiguration(applicationName,
                 streamARN, ddbStreamCredentials, workerID)
                 .withMaxRecords(maxRecords)
@@ -26,11 +26,11 @@ public class KclWithCallProcessRecords {
 
     // {fact rule=kcl-with-call-process-records@v1.0 defects=0}
     public KinesisClientLibConfiguration configureKCLCompliant() {
-        // Compliant: sets 'withCallProcessRecordsEvenForEmptyRecordList' to 'TRUE' during Kinesis Client Library (KCL) initialization.
+        // Compliant: sets withCallProcessRecordsEvenForEmptyRecordList to true during Kinesis Client Library (KCL) initialization.
         KinesisClientLibConfiguration kclConfig = new KinesisClientLibConfiguration(applicationName,
                 streamARN, ddbStreamCredentials, workerID)
                 .withMaxRecords(maxRecords)
-                .withCallProcessRecordsEvenForEmptyRecordList(callProcessRecordsEvenForEmptyRecordList)
+                .withCallProcessRecordsEvenForEmptyRecordList(true)
                 .withIdleTimeBetweenReadsInMillis(idleTimeBetweenReadsInMillis)
                 .withFailoverTimeMillis(leaseFailOverTimeInMillis)
                 .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
@@ -38,12 +38,11 @@ public class KclWithCallProcessRecords {
     }
     // {/fact}
 
-    String applicationName;
-    String streamARN;
-    AWSCredentialsProvider ddbStreamCredentials;
-    String workerID;
-    int maxRecords;
-    long idleTimeBetweenReadsInMillis;
-    long leaseFailOverTimeInMillis;
-    boolean callProcessRecordsEvenForEmptyRecordList;
+    private String applicationName;
+    private String streamARN;
+    private AWSCredentialsProvider ddbStreamCredentials;
+    private String workerID;
+    private int maxRecords;
+    private long idleTimeBetweenReadsInMillis;
+    private long leaseFailOverTimeInMillis;
 }
