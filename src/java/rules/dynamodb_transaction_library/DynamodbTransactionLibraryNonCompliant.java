@@ -5,7 +5,7 @@
 
 package rules.dynamodb_transaction_library;
 
-import stubs.TransactionManager;
+import com.amazonaws.services.dynamodbv2.transactions.TransactionManager;
 
 // {fact rule=dynamodb-transaction-library@v1.0 defects=1}
 public class DynamodbTransactionLibraryNonCompliant {

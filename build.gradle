@@ -17,6 +17,7 @@ sourceSets {
     main {
         java {
             srcDir 'src/java'
+            exclude 'rules/dynamodb_transaction_library/DynamodbTransactionLibraryNonCompliant.java'
         }
     }
 }
