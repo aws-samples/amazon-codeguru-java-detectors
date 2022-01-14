@@ -20,10 +20,10 @@ public class LdapInjection {
         try {
             DirContext directoryContext = new InitialDirContext();
             SearchControls controls = new SearchControls();
-            // Noncompliant: user-supplied filter is not sanitized.
             final String filter = request.getParameter("filter");
             Object[] args = new Object[]{"Some object"};
             String base = "some base";
+            // Noncompliant: unsanitized user-supplied filter is used.
             NamingEnumeration<SearchResult> results =
                     directoryContext.search(base, filter, args, controls);
             System.out.println(results);
@@ -39,7 +39,7 @@ public class LdapInjection {
             DirContext directoryContext = new InitialDirContext();
             SearchControls controls = new SearchControls();
             final String filter = request.getParameter("filter");
-            // Compliant: user-supplied filter is checked for allowed characters.
+            // Compliant: user-supplied filter is checked for allowed characters to prevent ldap injection.
             if (!filter.matches("[a-z]+")) {
                 throw new IllegalArgumentException();
             }
