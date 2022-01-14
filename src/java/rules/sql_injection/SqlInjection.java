@@ -13,9 +13,9 @@ public class SqlInjection {
     public void executeSqlStatementNonCompliant(HttpServletRequest request, java.sql.Connection connection) {
         final String favoriteColor = request.getParameter("favoriteColor");
         try {
-            // Noncompliant: user-given input might contain malicious special characters.
             String sql = "SELECT * FROM people WHERE favorite_color='" + favoriteColor + "'";
             java.sql.Statement statement = connection.createStatement();
+            // Noncompliant: user-given input is not sanitized before use.
             statement.execute(sql);
         } catch (java.sql.SQLException e) {
             throw new RuntimeException(e);
