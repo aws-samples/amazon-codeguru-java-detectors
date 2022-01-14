@@ -11,7 +11,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 public class AwsRegionEnumeration {
 
-    // {fact rule=aws-region-enumeration defects=1}
+    // {fact rule=aws-region-enumeration@v1.0 defects=1}
     public void createS3ClientNonCompliant() {
         // Noncompliant: a string is used to specify AWS region.
         AmazonS3 s3 = AmazonS3ClientBuilder.standard()
@@ -20,7 +20,7 @@ public class AwsRegionEnumeration {
     }
     // {/fact}
 
-    // {fact rule=aws-region-enumeration defects=0}
+    // {fact rule=aws-region-enumeration@v1.0 defects=0}
     public void createS3ClientCompliant() {
         // Compliant: Regions enum is used to specify AWS region.
         AmazonS3 s3 = AmazonS3ClientBuilder.standard()
