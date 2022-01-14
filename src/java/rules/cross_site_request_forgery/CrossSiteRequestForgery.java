@@ -11,7 +11,7 @@ public class CrossSiteRequestForgery {
 
     // {fact rule=cross-site-request-forgery@v1.0 defects=1}
     public void configureCsrfNonCompliant(HttpSecurity security) throws Exception {
-        // Non-compliant: disables CSRF protection.
+        // Noncompliant: disables CSRF protection.
         security.csrf().disable();
     }
     // {/fact}

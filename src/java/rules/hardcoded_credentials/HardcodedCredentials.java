@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 
 public class HardcodedCredentials {
 
-    // {fact rule=hardcoded-credentials defects=1}
+    // {fact rule=hardcoded-credentials@v1.0 defects=1}
     public void createSqlConnectionNonCompliant() throws Exception {
         // Noncompliant: password is hardcoded.
         final Connection connection = DriverManager.getConnection("some url",
@@ -19,7 +19,7 @@ public class HardcodedCredentials {
     }
     // {/fact}
 
-    // {fact rule=hardcoded-credentials defects=0}
+    // {fact rule=hardcoded-credentials@v1.0 defects=0}
     public void createSqlConnectionCompliant() throws Exception {
         // Compliant: password is obtained from environment.
         final Connection connection = DriverManager.getConnection("some url",
