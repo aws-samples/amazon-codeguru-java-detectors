@@ -12,7 +12,7 @@ public class MissingSpecificallyThrownExceptionHandling {
 
     // {fact rule=missing-specifically-thrown-exception-handling@v1.0 defects=1}
     public void exceptionHandlingNonCompliant()  {
-        // Noncompliant: catch is handling generic exception and not SomeException.
+        // Noncompliant: catch block handles generic Exception, but not SomeException.
         try {
             doSomething();
             throw new SomeException();
@@ -26,7 +26,7 @@ public class MissingSpecificallyThrownExceptionHandling {
 
     // {fact rule=missing-specifically-thrown-exception-handling@v1.0 defects=0}
     public void exceptionHandlingCompliant() {
-        // Compliant: catch is handling SomeException.
+        // Compliant: catch block handles SomeException.
         try {
             doSomething();
             throw new SomeException();
@@ -46,6 +46,6 @@ public class MissingSpecificallyThrownExceptionHandling {
     }
 
     public class SomeException extends Exception {
-
+        // Placeholder for SomeException definition.
     }
 }

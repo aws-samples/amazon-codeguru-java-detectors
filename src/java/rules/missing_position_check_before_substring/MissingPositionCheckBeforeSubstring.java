@@ -10,9 +10,9 @@ public class MissingPositionCheckBeforeSubstring {
     // {fact rule=missing-position-check-before-substring@v1.0 defects=1}
     public void checkSubStringNonCompliant(String sampleString) {
         final String sampleSubstring = "sample";
-        // Noncompliant: it is not checked if substring is part of the string.
         final int index = sampleString.lastIndexOf(sampleSubstring);
-        sampleString.substring(0, index);
+        // Noncompliant: it is not checked if substring is part of the string.
+        final String subString = sampleString.substring(0, index);
     }
     // {/fact}
 
