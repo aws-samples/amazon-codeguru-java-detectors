@@ -17,6 +17,7 @@ sourceSets {
     main {
         java {
             srcDir 'src/java'
+            exclude 'rules/dynamodb_transaction_library/DynamodbTransactionLibraryNonCompliant.java'
         }
     }
 }
@@ -27,9 +28,16 @@ dependencies {
     implementation("org.slf4j:slf4j-api:1.7.32")
     implementation("org.opensaml:xmltooling:1.4.4")
     implementation("com.amazonaws:aws-lambda-java-core:1.0.0")
-    implementation("com.amazonaws:aws-java-sdk-s3:1.12.131")
-    implementation("com.amazonaws:aws-java-sdk-dynamodb:1.12.131")
     implementation("org.apache.hivemall:hivemall-core:0.6.0-incubating")
     implementation("com.fasterxml.jackson.core:jackson-core:2.13.1")
     implementation("org.apache.hadoop:hadoop-common:3.3.1")
+    implementation("com.amazonaws:aws-java-sdk-kinesis:1.12.131")
+    implementation("com.amazonaws:aws-java-sdk-dynamodb:1.12.132")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.131")
+    implementation("com.amazonaws:aws-java-sdk-lambda:1.12.131")
+    implementation("com.amazonaws:aws-java-sdk-cloudwatch:1.12.131")
+    implementation("com.amazonaws:aws-lambda-java-events:3.11.0")
+    implementation("javax.persistence:javax.persistence-api:2.2")
+    implementation("com.amazonaws:aws-java-sdk-sqs:1.12.131")
+    implementation("com.amazonaws:aws-java-sdk:1.12.131")
 }
