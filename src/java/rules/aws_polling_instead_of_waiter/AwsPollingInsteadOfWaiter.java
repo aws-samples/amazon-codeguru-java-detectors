@@ -21,7 +21,7 @@ public class AwsPollingInsteadOfWaiter {
     private Logger logger;
 
     // {fact rule=aws-polling-instead-of-waiter@v1.0 defects=1}
-    public boolean terminateInstanceNonCompliant(final String instanceId, final EC2Client ec2Client)
+    public boolean terminateInstanceNoncompliant(final String instanceId, final EC2Client ec2Client)
             throws InterruptedException {
         long start = System.currentTimeMillis();
         int WAIT_FOR_TRANSITION_INTERVAL = 10;
@@ -48,7 +48,7 @@ public class AwsPollingInsteadOfWaiter {
                     Thread.sleep(WAIT_FOR_TRANSITION_INTERVAL);
                 }
             } catch (AmazonServiceException ex) {
-                throw ex;
+                logger.info(ex.getErrorCode());
             }
         }
         return false;
