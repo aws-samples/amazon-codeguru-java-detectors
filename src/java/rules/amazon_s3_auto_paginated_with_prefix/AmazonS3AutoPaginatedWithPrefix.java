@@ -27,7 +27,7 @@ public class AmazonS3AutoPaginatedWithPrefix {
 
     // {fact rule=amazon-s3-auto-paginated-with-prefix@v1.0 defects=0}
     public void s3GetObjectsCompliant(AmazonS3 amazonS3Client, String bucketName, String prefix) {
-        // Compliant: uses S3Objects for pagination.
+        // Compliant: uses S3Objects.withPrefix() for pagination.
         for (S3ObjectSummary objectSummary : S3Objects.withPrefix(amazonS3Client, bucketName, prefix)) {
             System.out.printf(" - %s (size: %d)\n", objectSummary.getKey(), objectSummary.getSize());
         }
