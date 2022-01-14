@@ -10,7 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.InputStream;
 
-public class xml_external_entity {
+public class XmlExternalEntity {
 
     // {fact rule=xml-external-entity@v1.0 defects=1}
     public DocumentBuilder createDocumentBuilderNonCompliant(InputStream inputStream) throws Exception {
