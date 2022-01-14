@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-name: Reviewer CLI
+name: Reviewer CLI (Java 11)
 
 on: [pull_request]
 
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    name: Reviewer CLI
+    name: Reviewer CLI (Java 11)
     runs-on: ubuntu-latest
     steps:
     - name: Assume IAM role
@@ -33,11 +33,11 @@ jobs:
       with:
         fetch-depth: 0
         
-    - name: Set up JDK
+    - name: Set up JDK v11
       if: steps.assume-iam-role.outcome == 'success'
       uses: actions/setup-java@v2
       with:
-        java-version: '8'
+        java-version: '11'
         distribution: 'adopt'
 
     - name: Build project with Gradle
@@ -71,7 +71,7 @@ jobs:
       run: |
         jq '[ .[] | {RuleId: .RuleMetadata.RuleId, File: .FilePath, Line: .StartLine} ]' \
           code-guru/recommendations.json > code-guru/recommendations-summary.json
-        echo "Recommendations" > code-guru/recommendations-summary-table.txt
+        echo "Recommendations (Java 11)" > code-guru/recommendations-summary-table.txt
         echo "ruleId filePath lineNumber" >> code-guru/recommendations-summary-table.txt
         jq -r '.[] | {RuleId: .RuleMetadata.RuleId, File: .FilePath, Line: .StartLine} | join(" ")' \
           code-guru/recommendations.json | sort >> code-guru/recommendations-summary-table.txt
@@ -104,7 +104,7 @@ jobs:
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         append: false
-        header: codeguru-findings
+        header: codeguru-findings-java11
         number: ${{ steps.findpr.outputs.pr }}
         path: code-guru/recommendations-summary-table.txt
         # message does not seem to be displayed in comment when `path` option is used.
