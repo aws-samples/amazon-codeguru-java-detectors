@@ -11,9 +11,10 @@ import java.util.Map;
 @Slf4j
 public class SensitiveInformationLeak {
     // {fact rule=sensitive-information-leak@v1.0 defects=1}
-    public void processResponseNonCompliant(Map<String, String> response) {
-        final String name = response.get("Name");
+    public void processResponseNoncompliant(Map<String, String> response) {
         // Noncompliant: logs sensitive data without redaction resulting in a possible sensitive information leak.
+        final String name = response.get("Name");
+        String redacted = RedactionUtil.redact(name);
         log.info(name);
     }
     // {/fact}
@@ -21,13 +22,16 @@ public class SensitiveInformationLeak {
     // {fact rule=sensitive-information-leak@v1.0 defects=0}
     public void processResponseCompliant(Map<String, String> response) {
         final String name = response.get("Name");
-        String redacted = redact(name);
+        String redacted = RedactionUtil.redact(name);
         // Compliant: sensitive data is passed through redaction before logging, preventing possible sensitive information leak.
         log.info(redacted);
     }
     // {/fact}
 
-    String redact (String name) {
-        return name.replaceAll("[^a-zA-Z]", "");
+    static class RedactionUtil {
+
+        static String redact(String name) {
+            return name.replaceAll("[^a-zA-Z]", "");
+        }
     }
 }

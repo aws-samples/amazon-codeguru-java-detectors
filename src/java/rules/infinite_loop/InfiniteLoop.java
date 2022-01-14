@@ -12,7 +12,7 @@ import java.util.concurrent.TimeoutException;
 public class InfiniteLoop {
 
     // {fact rule=infinte-loop@v1.0 defects=1}
-    public String loopControlNonCompliant() {
+    public String loopControlNoncompliant() {
         ResultClass resultClass = new ResultClass();
         // Noncompliant: does not have loop control flow to prevent an infinite loop.
         for ( ; ; ) {
