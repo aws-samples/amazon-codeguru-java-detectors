@@ -28,7 +28,7 @@ public class AwsPollingInsteadOfWaiter {
         int INSTANCE_TERMINATION_TIMEOUT =100;
         while (true) {
             try {
-                // Noncompliant: use waiters feature instead of custom polling.
+                // Noncompliant: uses custom polling instead of waiters feature.
                 DescribeInstanceStatusResult describeInstanceStatusResult = ec2Client.describeInstanceStatus(
                         new DescribeInstanceStatusRequest().withInstanceIds(instanceId).withIncludeAllInstances(true));
                 List<InstanceStatus> instanceStatusList = describeInstanceStatusResult.getInstanceStatuses();

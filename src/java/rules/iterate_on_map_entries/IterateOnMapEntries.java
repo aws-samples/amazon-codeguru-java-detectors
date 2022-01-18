@@ -18,7 +18,7 @@ public class IterateOnMapEntries {
     }
     // {/fact}
 
-    // {fact rule=iterate-on-map-entries@v1.0 defects=1}
+    // {fact rule=iterate-on-map-entries@v1.0 defects=0}
     public void iterateOnEntrySetCompliant(Map<String, String> map) {
         // Compliant: iterate the set of map entries.
         for (Map.Entry<String,String> entry : map.entrySet())

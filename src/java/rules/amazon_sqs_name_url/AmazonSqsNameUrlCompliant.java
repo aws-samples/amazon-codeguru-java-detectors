@@ -9,7 +9,7 @@ import com.amazonaws.services.sqs.model.Message;
 import stubs.sqsMetricsClient;
 import java.util.concurrent.Callable;
 
-// {fact rule=amazon-sqs-name-url@v1.0 defects=1}
+// {fact rule=amazon-sqs-name-url@v1.0 defects=0}
 public abstract class AmazonSqsNameUrlCompliant implements Callable<Message> {
 
     public void compliant() {
