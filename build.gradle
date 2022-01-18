@@ -30,6 +30,8 @@ dependencies {
     implementation("org.slf4j:slf4j-api:1.7.32")
     implementation("org.opensaml:xmltooling:1.4.4")
     implementation("com.amazonaws:aws-lambda-java-core:1.0.0")
+    implementation("com.android.support:support-annotations:27.1.1")
+    implementation("com.google.code.findbugs:jsr305:3.0.2")
     implementation("com.amazonaws:aws-java-sdk-ec2:1.12.131")
     implementation("org.springframework.security:spring-security-config:5.6.1")
     implementation("org.apache.hivemall:hivemall-core:0.6.0-incubating")
