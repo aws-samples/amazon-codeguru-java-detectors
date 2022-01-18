@@ -25,6 +25,7 @@ public class S3VerifyBucketOwner {
     }
     // {/fact}
 
+    // {fact rule=s3-verify-bucket-owner@v1.0 defects=0}
     public void putObjectCompliant() {
         S3Client s3Client = S3Client.create();
         // Compliant: the account that owns the bucket is specified in the request.
