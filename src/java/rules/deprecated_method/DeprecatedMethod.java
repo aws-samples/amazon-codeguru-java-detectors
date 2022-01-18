@@ -5,34 +5,23 @@
 
 package rules.deprecated_method;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
-import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
-
-import java.util.Map;
+import org.springframework.security.crypto.codec.Base64;
 
 public class DeprecatedMethod {
 
     // {fact rule=deprecated-method@v1.0 defects=1}
-    public PutItemRequest createPutItemRequestNonCompliant(Map<String, ExpectedAttributeValue> expectedAttributeValuesByName,
-                                                       String tableName,Map<String, AttributeValue> item ) {
-        final PutItemRequest request = new PutItemRequest()
-                // Noncompliant: expected is a legacy paramater.
-                .withExpected(expectedAttributeValuesByName)
-                .withTableName(tableName)
-                .withItem(item);
-        return request;
+    public String encodePasswordNoncompliant(String password) {
+        // Noncompliant: uses deprecated Spring Framework's Base64 class.
+        byte[] encodedId = Base64.encode(password.toLowerCase().getBytes());
+        return new String(encodedId);
     }
     // {/fact}
 
     // {fact rule=deprecated-method@v1.0 defects=0}
-    public PutItemRequest createPutItemRequestCompliant(Map<String,ExpectedAttributeValue> expectedAttributeValuesByName,
-                                                    String tableName, Map<String, AttributeValue> item) {
-        // Compliant: no deprecated methods used.
-        final PutItemRequest request = new PutItemRequest()
-                .withTableName(tableName)
-                .withItem(item);
-        return request;
+    public String encodePasswordCompliant(String password) {
+        // Compliant: uses java Base64 class.
+        byte[] encodedId = java.util.Base64.getEncoder().encode(password.toLowerCase().getBytes());
+        return new String(encodedId);
     }
     // {/fact}
 }

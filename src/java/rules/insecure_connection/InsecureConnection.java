@@ -13,7 +13,7 @@ import java.net.URL;
 public class InsecureConnection {
 
     // {fact rule=insecure-connection@v1.0 defects=1}
-    public void createConnectionNonCompliant() {
+    public void createConnectionNoncompliant() {
         try {
             URL url = new URL("http://www.example.com/");
             // Noncompliant: creates an insecure http connection.

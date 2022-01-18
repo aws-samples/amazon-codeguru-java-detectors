@@ -5,40 +5,49 @@
 
 package rules.mutually_exclusive_calls_found;
 
-import software.amazon.awssdk.services.kms.KmsClient;
-import software.amazon.awssdk.services.kms.model.GenerateDataKeyRequest;
-import software.amazon.awssdk.services.kms.model.GenerateDataKeyResponse;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
+import com.amazonaws.services.ec2.model.*;
 
 public class MutuallyExclusiveCallsFound {
 
     // {fact rule=mutually-exclusive-calls-found@v1.0 defects=1}
-    public GenerateDataKeyResponse generateDataKeyNonCompliant(String keyId) {
-        String requestKeyId = "alias/ExampleAlias";
-        KmsClient client = KmsClient.create();
-        String keySpec = "AES_256";
-        // Noncompliant: keySpec and numberOfBytes cannot be used together in GenerateDataKey request.
-        GenerateDataKeyRequest request = GenerateDataKeyRequest.builder()
-                .keyId(keyId)
-                .keySpec(keySpec)
-                .numberOfBytes(32)
-                .build();
-        GenerateDataKeyResponse response = client.generateDataKey(request);
-        return response;
+    public void ec2RunInstancesNoncompliant(String templateName, String templateID, String zone) {
+        AmazonEC2 ec2Client = AmazonEC2ClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
+        // Noncompliant: uses mutually exclusive withLaunchTemplateId and withLaunchTemplateName together.
+        RunInstancesResult runInstancesResult = ec2Client.runInstances(
+                new RunInstancesRequest()
+                        .withPlacement(new Placement().withAvailabilityZone(zone))
+                        .withInstanceType(InstanceType.T2Micro)
+                        .withInstanceInitiatedShutdownBehavior("terminate")
+                        .withMinCount(1)
+                        .withMaxCount(2)
+                        .withLaunchTemplate(
+                                new LaunchTemplateSpecification()
+                                        .withLaunchTemplateName(templateName)
+                                        .withLaunchTemplateId(templateID)
+                        )
+        );
     }
     // {/fact}
 
     // {fact rule=mutually-exclusive-calls-found@v1.0 defects=0}
-    public GenerateDataKeyResponse generateDataKeyCompliant(String keyId) {
-        String requestKeyId = "alias/ExampleAlias";
-        KmsClient client = KmsClient.create();
-        String keySpec = "AES_256";
-        // Compliant: only keySpec parameter is used.
-        GenerateDataKeyRequest request = GenerateDataKeyRequest.builder()
-                .keyId(requestKeyId)
-                .keySpec(keySpec)
-                .build();
-        GenerateDataKeyResponse response = client.generateDataKey(request);
-        return response;
+    public void ec2RunInstancesCompliant(String templateName, String templateID, String zone) {
+        AmazonEC2 ec2Client = AmazonEC2ClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
+        // Compliant: uses only withLaunchTemplateId.
+        RunInstancesResult runInstancesResult = ec2Client.runInstances(
+                new RunInstancesRequest()
+                        .withPlacement(new Placement().withAvailabilityZone(zone))
+                        .withInstanceType(InstanceType.T2Micro)
+                        .withInstanceInitiatedShutdownBehavior("terminate")
+                        .withMinCount(1)
+                        .withMaxCount(2)
+                        .withLaunchTemplate(
+                                new LaunchTemplateSpecification()
+                                        .withLaunchTemplateId(templateID)
+                        )
+        );
     }
     // {/fact}
 }

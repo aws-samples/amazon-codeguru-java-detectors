@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConcurrencyOverSynchronization {
 
     // {fact rule=concurrency-over-synchronization@v1.0 defects=1}
-    public String putIfAbsentNonCompliant(ConcurrentHashMap<String, String> concurrentMap, String key) {
+    public String putIfAbsentNoncompliant(ConcurrentHashMap<String, String> concurrentMap, String key) {
         String sampleValue = "sampleString";
         // Noncompliant: this is less efficient and more error-prone than using putIfAbsent.
         synchronized(this) {
