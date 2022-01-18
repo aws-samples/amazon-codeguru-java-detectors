@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class OutOfSyncInputAndOutput {
-    // {fact rule=out_of_sync_input_and_output@v1.0 defects=1}
+    // {fact rule=out-of-sync-input-and-output@v1.0 defects=1}
     void outOfSyncNoncompliant(String deploymentId) {
         String deploymentItem = null;
         try {
@@ -23,7 +23,7 @@ public abstract class OutOfSyncInputAndOutput {
     }
     // {/fact}
 
-    // {fact rule=out_of_sync_input_and_output@v1.0 defects=0}
+    // {fact rule=out-of-sync-input-and-output@v1.0 defects=0}
     void outOfSyncCompliant(String deploymentId) {
         String deploymentItem = null;
         try {
