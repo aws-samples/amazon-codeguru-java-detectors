@@ -51,4 +51,5 @@ dependencies {
     implementation("com.amazonaws:aws-java-sdk:1.12.131")
     implementation("com.android.support:support-annotations:27.1.1")
     implementation("com.google.code.findbugs:jsr305:3.0.2")
+    implementation("com.amazonaws:aws-java-sdk-dynamodb:1.12.133")
 }
