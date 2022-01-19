@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package rules.AwsDynamodbGetitemNullCheck;
+package rules.aws_dynamodb_getitem_null_check;
 
 import java.util.Map;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
