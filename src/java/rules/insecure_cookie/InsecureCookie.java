@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class InsecureCookie {
     // {fact rule=insecure-cookie@v1.0 defects=1}
-    public static void cookieInsecureByDefaultNonCompliant(HttpServletResponse response) {
+    public static void cookieInsecureByDefaultNoncompliant(HttpServletResponse response) {
         Cookie cookie = new Cookie("name", "value");
         // Noncompliant: by default, the Cookie is not secure.
         response.addCookie(cookie);

@@ -9,7 +9,7 @@ import java.security.SecureRandom;
 
 public class WeakRandomNumberGeneration {
     // {fact rule=weak-random-number-generation@v1.0 defects=1}
-    static void secureRandomSpecificAlgorithmNonCompliant() throws Exception {
+    static void secureRandomSpecificAlgorithmNoncompliant() throws Exception {
         final String ALGORITHM_NAME = "DES";
         // Noncompliant: one specific algorithm is requested.
         SecureRandom generator = SecureRandom.getInstance(ALGORITHM_NAME);

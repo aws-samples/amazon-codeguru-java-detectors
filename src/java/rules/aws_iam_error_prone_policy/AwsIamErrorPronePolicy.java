@@ -15,7 +15,7 @@ import java.net.URLDecoder;
 
 public class AwsIamErrorPronePolicy {
     // {fact rule=aws-iam-error-prone-policy@v1.0 defects=1}
-    public void iamPolicyNonCompliant(final String roleName, String userArn) {
+    public void iamPolicyNoncompliant(final String roleName, String userArn) {
         final AmazonIdentityManagement iamClient = AmazonIdentityManagementClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
         String policyDocument = "{\n" +
                 " \"Version\": \"2012-10-17\",\n" +

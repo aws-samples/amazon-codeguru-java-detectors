@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 public class InsecureTemporaryFile {
     // {fact rule=insecure-temporary-file@v1.0 defects=1}
-    public void withDeleteNonCompliant() throws Exception {
+    public void withDeleteNoncompliant() throws Exception {
         File tmp = File.createTempFile("myprefix", "mysuffix");
         tmp.delete();
         // Noncompliant: uses a temporary file path to create a temporary directory.

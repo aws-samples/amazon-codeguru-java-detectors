@@ -13,7 +13,7 @@ import java.io.File;
 public class PartialEncryption {
 
     // {fact rule=partial-encryption@v1.0 defects=1}
-    public void s3PutObjectNonCompliant(AmazonS3 s3Client, String bucketName, String partFileKey, String kmsKeyId,
+    public void s3PutObjectNoncompliant(AmazonS3 s3Client, String bucketName, String partFileKey, String kmsKeyId,
                                         File partFile, String bucketOwner) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, partFileKey, partFile).withExpectedBucketOwner(bucketOwner);
         // Noncompliant: encryption is not performed in all paths.

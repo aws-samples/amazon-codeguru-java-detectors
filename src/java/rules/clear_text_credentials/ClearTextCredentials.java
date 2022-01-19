@@ -13,7 +13,7 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 public class ClearTextCredentials {
 
     // {fact rule=clear-text-credentials@v1.0 defects=1}
-    public void logCredentialsNonCompliant() {
+    public void logCredentialsNoncompliant() {
         String publicData = "some public data";
         AWSCredentials credentials = new DefaultAWSCredentialsProviderChain().getCredentials();
         // Noncompliant: secret access key is logged.

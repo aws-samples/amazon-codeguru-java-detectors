@@ -10,7 +10,7 @@ import com.amazonaws.services.s3.AmazonS3;
 public class ObjectPresence {
 
     // {fact rule=object-presence@v1.0 defects=1}
-    public boolean checkS3ObjectNonCompliant(AmazonS3 s3Client, String bucketName, String key) {
+    public boolean checkS3ObjectNoncompliant(AmazonS3 s3Client, String bucketName, String key) {
         // Noncompliant: implements an object existence check from scratch instead of using doesObjectExist.
         try {
             s3Client.getObjectMetadata(bucketName, key);

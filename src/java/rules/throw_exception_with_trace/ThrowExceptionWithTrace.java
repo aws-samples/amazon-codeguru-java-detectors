@@ -8,7 +8,7 @@ package rules.throw_exception_with_trace;
 public class ThrowExceptionWithTrace {
 
     // {fact rule=throw-exception-with-trace@v1.0 defects=1}
-    public void throwExceptionWithTraceNonCompliant() throws Exception {
+    public void throwExceptionWithTraceNoncompliant() throws Exception {
         try {
             doSomething();
         } catch (Exception e) {

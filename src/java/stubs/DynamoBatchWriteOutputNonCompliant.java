@@ -5,6 +5,6 @@
 
 package stubs;
 
-public abstract class DynamoBatchWriteOutputNonCompliant {
-    public abstract void mapperNonCompliant(DynamoDBMapperCollection<String> batch);
+public abstract class DynamoBatchWriteOutputNoncompliant {
+    public abstract void mapperNoncompliant(DynamoDBMapperCollection<String> batch);
 }

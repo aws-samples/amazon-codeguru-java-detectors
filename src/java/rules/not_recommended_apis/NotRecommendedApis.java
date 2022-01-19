@@ -16,7 +16,7 @@ import com.amazonaws.services.s3.transfer.Upload;
 
 public class NotRecommendedApis {
     // {fact rule=not-recommended-apis@v1.0 defects=1}
-    public void s3MultiPartUploadNonCompliant() {
+    public void s3MultiPartUploadNoncompliant() {
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.US_EAST_1)
                 .build();

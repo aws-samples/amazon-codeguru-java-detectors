@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // {fact rule=amazon-sqs-enable-long-polling@v1.0 defects=1}
-public class AmazonSqsEnableLongPollingNonCompliant {
+public class AmazonSqsEnableLongPollingNoncompliant {
 
     public static void main(String[] args) {
 
@@ -24,7 +24,7 @@ public class AmazonSqsEnableLongPollingNonCompliant {
         String queueNamePattern = "sqs-poc-fifo-queue";
         int numOfQueues = 6;
         String queue_url="QUEUE_URL";
-        createQueuesNonCompliant(sqs, queueNamePattern, numOfQueues, queue_url);
+        createQueuesNoncompliant(sqs, queueNamePattern, numOfQueues, queue_url);
     }
 
     /**
@@ -35,7 +35,7 @@ public class AmazonSqsEnableLongPollingNonCompliant {
      * @param queueNamePattern
      * @param numOfQueues
      */
-    public static void createQueuesNonCompliant(AmazonSQS sqs,
+    public static void createQueuesNoncompliant(AmazonSQS sqs,
                                                 String queueNamePattern,
                                                 int numOfQueues,
                                                 String queue_url) {

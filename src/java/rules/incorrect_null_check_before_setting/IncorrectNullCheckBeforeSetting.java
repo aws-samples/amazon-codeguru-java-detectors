@@ -10,7 +10,7 @@ public class IncorrectNullCheckBeforeSetting {
     private String data1, data2;
 
     // {fact rule=incorrect-null-check-before-setting@v1.0 defects=1}
-    public void nullCheckNonCompliant() {
+    public void nullCheckNoncompliant() {
         if (data1 != null) {
             // Noncompliant: overwriting immediately after a non-null check is likely to be a typo.
             data1 = data2;

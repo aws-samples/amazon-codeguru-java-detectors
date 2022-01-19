@@ -8,7 +8,7 @@ package rules.missing_position_check_before_substring;
 public class MissingPositionCheckBeforeSubstring {
 
     // {fact rule=missing-position-check-before-substring@v1.0 defects=1}
-    public void checkSubStringNonCompliant(String sampleString) {
+    public void checkSubStringNoncompliant(String sampleString) {
         final String sampleSubstring = "sample";
         final int index = sampleString.lastIndexOf(sampleSubstring);
         // Noncompliant: it is not checked if substring is part of the string.

@@ -6,7 +6,7 @@
 package rules.concurrency_deadlock;
 
 // {fact rule=concurrency-deadlock@v1.0 defects=1}
-public class ConcurrencyDeadlockNonCompliant {
+public class ConcurrencyDeadlockNoncompliant {
 
     Object syncObject1 = new Object();
     Object syncObject2 = new Object();

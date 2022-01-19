@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AwsCustomRetries {
 
     // {fact rule=aws-custom-retries@v1.0 defects=1}
-    public InvokeResult invokeLambdaNonCompliant() {
+    public InvokeResult invokeLambdaNoncompliant() {
         AWSLambda awsLambdaClient = AWSLambdaClientBuilder.standard().build();
         final InvokeRequest request = new InvokeRequest();
         // Noncompliant: manual retry if a service exception is thrown.

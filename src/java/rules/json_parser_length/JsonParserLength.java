@@ -13,7 +13,7 @@ import java.io.IOException;
 public class JsonParserLength {
 
   // {fact rule=json-parser-length@v1.0 defects=1}
-    public void createJsonParserNonCompliant(Text text) throws IOException {
+    public void createJsonParserNoncompliant(Text text) throws IOException {
         // Noncompliant: length of input byte array not specified.
         new JsonFactory().createJsonParser(new FastByteArrayInputStream(text.getBytes()));
     }

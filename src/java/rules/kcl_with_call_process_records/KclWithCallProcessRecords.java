@@ -12,7 +12,7 @@ import com.amazonaws.services.kinesis.clientlibrary.lib.worker.KinesisClientLibC
 public class KclWithCallProcessRecords {
 
     // {fact rule=kcl-with-call-process-records@v1.0 defects=1}
-    public KinesisClientLibConfiguration configureKCLNonCompliant() {
+    public KinesisClientLibConfiguration configureKCLNoncompliant() {
         // Noncompliant: doesn't set withCallProcessRecordsEvenForEmptyRecordList to true during Kinesis Client Library (KCL) initialization.
         KinesisClientLibConfiguration kclConfig = new KinesisClientLibConfiguration(applicationName,
                 streamARN, ddbStreamCredentials, workerID)

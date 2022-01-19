@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MissingFileDeletionResultCheck {
 
     // {fact rule=missing-file-deletion-result-check@v1.0 defects=1}
-    public void fileDeletionNonCompliant(File file) {
+    public void fileDeletionNoncompliant(File file) {
         if (file.exists()) {
             log.info("Deleting file: " + file.getName());
             // Noncompliant: result of file deletion not checked.

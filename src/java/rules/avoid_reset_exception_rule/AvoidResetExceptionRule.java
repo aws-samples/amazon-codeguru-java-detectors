@@ -15,7 +15,7 @@ import java.io.InputStream;
 public class AvoidResetExceptionRule {
 
     // {fact rule=avoid-reset-exception-rule@v1.0 defects=1}
-    public void s3PutObjectNonCompliant(String bucket, String key, InputStream content,
+    public void s3PutObjectNoncompliant(String bucket, String key, InputStream content,
                                         ObjectMetadata metadata, AmazonS3 s3Client, String owner) {
         log.info("Putting content into bucket {} and key {}", bucket, key);
         // Noncompliant: readLimit not set.

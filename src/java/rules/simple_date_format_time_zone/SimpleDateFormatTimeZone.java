@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 
 public class SimpleDateFormatTimeZone {
     // {fact rule=simple-date-format-time-zone@v1.0 defects=1}
-    void setTimezoneNonCompliant() {
+    void setTimezoneNoncompliant() {
         // Noncompliant: does not set the timezone while using a 'SimpleDateFormat' object.
         doSomething(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     }

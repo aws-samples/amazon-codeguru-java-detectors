@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SqlInjection {
 
     // {fact rule=sql-injection@v1.0 defects=1}
-    public void executeSqlStatementNonCompliant(HttpServletRequest request, java.sql.Connection connection) {
+    public void executeSqlStatementNoncompliant(HttpServletRequest request, java.sql.Connection connection) {
         final String favoriteColor = request.getParameter("favoriteColor");
         try {
             String sql = "SELECT * FROM people WHERE favorite_color='" + favoriteColor + "'";

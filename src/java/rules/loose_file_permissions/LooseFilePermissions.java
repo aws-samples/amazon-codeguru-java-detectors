@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class LooseFilePermissions {
     // {fact rule=loose-file-permissions@v1.0 defects=1}
-    public void grantOthersPermissionsNonCompliant(final Path p) throws Exception {
+    public void grantOthersPermissionsNoncompliant(final Path p) throws Exception {
         Set<PosixFilePermission> permissions = PosixFilePermissions.fromString("------rwx");
         // Noncompliant: Granting other permissions.
         Files.setPosixFilePermissions(p, permissions);

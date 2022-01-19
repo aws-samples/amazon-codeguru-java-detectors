@@ -6,7 +6,7 @@
 package rules.improper_locking;
 
 // {fact rule=improper-locking@v1.0 defects=1}
-public class ImproperLockingNonCompliant {
+public class ImproperLockingNoncompliant {
 
     Object one = new Object();
     Object two = new Object();

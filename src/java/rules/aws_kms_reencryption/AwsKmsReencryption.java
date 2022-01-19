@@ -13,7 +13,7 @@ import software.amazon.awssdk.services.kms.model.ReEncryptRequest;
 
 public class AwsKmsReencryption {
     // {fact rule=aws-kms-reencryption@v1.0 defects=1}
-    public void withoutReEncryptNonCompliant(KmsClient client, SdkBytes encryptedContent) {
+    public void withoutReEncryptNoncompliant(KmsClient client, SdkBytes encryptedContent) {
 
         DecryptRequest decryptRequest = DecryptRequest.builder()
                 .ciphertextBlob(encryptedContent)

@@ -13,7 +13,7 @@ import java.io.InputStream;
 public class XmlExternalEntity {
 
     // {fact rule=xml-external-entity@v1.0 defects=1}
-    public DocumentBuilder createDocumentBuilderNonCompliant(InputStream inputStream) throws Exception {
+    public DocumentBuilder createDocumentBuilderNoncompliant(InputStream inputStream) throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setValidating(true);
         factory.setIgnoringElementContentWhitespace(true);

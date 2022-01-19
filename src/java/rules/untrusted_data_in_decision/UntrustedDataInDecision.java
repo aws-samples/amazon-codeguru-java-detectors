@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UntrustedDataInDecision {
 
     // {fact rule=untrusted-data-in-decision@v1.0 defects=1}
-    public void logSessionIdNonCompliant(HttpServletRequest request) {
+    public void logSessionIdNoncompliant(HttpServletRequest request) {
         final String sessionId = request.getRequestedSessionId();
         // Noncompliant: user-supplied session ID is used to make a decision.
         if (sessionId != null && sessionId.equals("ImportantSession")) {

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UntrustedDeserialization {
     // {fact rule=untrusted-deserialization@v1.0 defects=1}
-    public List ObjectMapperNonCompliant(final File input) throws Exception {
+    public List ObjectMapperNoncompliant(final File input) throws Exception {
         final ObjectMapper mapper = new ObjectMapper();
         // Noncompliant: enabling default typing can introduce a remote code execution vulnerability.
         mapper.enableDefaultTyping();

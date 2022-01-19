@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class StreamMinMaxVsSort {
     // {fact rule=stream-min-max-vs-sort@v1.0 defects=1}
-    Optional<String> streamSortThenFindFirstNonCompliant(final Collection<String> col) {
+    Optional<String> streamSortThenFindFirstNoncompliant(final Collection<String> col) {
         // Noncompliant: uses sorted and findFirst over min, max stream methods.
         return col.stream()
                 .sorted()

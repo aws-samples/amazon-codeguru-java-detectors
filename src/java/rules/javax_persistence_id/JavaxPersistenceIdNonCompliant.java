@@ -21,7 +21,7 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JavaxPersistenceIdNonCompliant {
+public class JavaxPersistenceIdNoncompliant {
 
     // Noncompliant: attaches an auto-incremented ID to 32-bit data
     @Id

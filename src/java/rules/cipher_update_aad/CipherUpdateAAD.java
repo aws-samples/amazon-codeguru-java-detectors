@@ -14,7 +14,7 @@ import java.security.GeneralSecurityException;
 public class CipherUpdateAAD {
 
     // {fact rule=cipher-update-aad@v1.0 defects=1}
-    public byte[] createCipherNonCompliant(byte[] key, int tagLength, byte[] ivSource, byte[] salt, byte[] data)
+    public byte[] createCipherNoncompliant(byte[] key, int tagLength, byte[] ivSource, byte[] salt, byte[] data)
             throws GeneralSecurityException {
 
         SecretKey secretKeySpec = new SecretKeySpec(key, "AES");

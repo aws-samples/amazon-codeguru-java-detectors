@@ -11,7 +11,7 @@ import java.io.IOException;
 public class OsCommandInjection {
 
     // {fact rule=os-command-injection@v1.0 defects=1}
-    public void createProcessNonCompliant(HttpServletRequest request) {
+    public void createProcessNoncompliant(HttpServletRequest request) {
         String favoriteColor = request.getParameter("favoriteColor");
         // Noncompliant: user-supplied parameter is passed to an OS command and could be malicious.
         ProcessBuilder pb = new ProcessBuilder("/usr/local/bin/program", "--color", favoriteColor);

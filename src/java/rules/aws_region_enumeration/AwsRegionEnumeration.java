@@ -12,7 +12,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 public class AwsRegionEnumeration {
 
     // {fact rule=aws-region-enumeration@v1.0 defects=1}
-    public void createS3ClientNonCompliant() {
+    public void createS3ClientNoncompliant() {
         // Noncompliant: a string is used to specify AWS region.
         AmazonS3 s3 = AmazonS3ClientBuilder.standard()
                 .withRegion("us-west-2")

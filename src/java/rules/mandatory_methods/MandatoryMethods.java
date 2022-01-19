@@ -8,7 +8,7 @@ import com.amazonaws.services.simplesystemsmanagement.model.PutParameterRequest;
 
 public class MandatoryMethods {
     // {fact rule=mandatory-methods@v1.0 defects=1}
-    public void checkParameterDescriptionAllCallNonCompliant() {
+    public void checkParameterDescriptionAllCallNoncompliant() {
         // Noncompliant: does not call mandatory methods on the object after its creation.
         PutParameterRequest putParameterRequest = new PutParameterRequest();
         putParameterRequest.setName("parameterName");
