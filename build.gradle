@@ -55,3 +55,4 @@ dependencies {
     implementation("com.google.code.findbugs:jsr305:3.0.2")
     implementation("com.amazonaws:aws-java-sdk-dynamodb:1.12.133")
 }
+
