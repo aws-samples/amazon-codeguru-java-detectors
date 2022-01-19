@@ -6,6 +6,7 @@
 package stubs;
 
 public class DynamoDBMapperCollection<T> {
+  
     public void clear() {
     }
 }
