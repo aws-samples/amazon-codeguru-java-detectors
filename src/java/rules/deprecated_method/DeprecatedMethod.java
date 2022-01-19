@@ -11,7 +11,7 @@ public class DeprecatedMethod {
 
     // {fact rule=deprecated-method@v1.0 defects=1}
     public String encodePasswordNoncompliant(String password) {
-        // Noncompliant: uses deprecated Spring Framework's Base64 class.
+        // Noncompliant: uses deprecated Base64 class from Spring Framework.
         byte[] encodedId = Base64.encode(password.toLowerCase().getBytes());
         return new String(encodedId);
     }
@@ -19,7 +19,7 @@ public class DeprecatedMethod {
 
     // {fact rule=deprecated-method@v1.0 defects=0}
     public String encodePasswordCompliant(String password) {
-        // Compliant: uses java Base64 class.
+        // Compliant: uses the standard Base64 class from the Java SDK..
         byte[] encodedId = java.util.Base64.getEncoder().encode(password.toLowerCase().getBytes());
         return new String(encodedId);
     }
