@@ -5,8 +5,8 @@
 
 package stubs;
 
-public class DynamoDBMapperCollection<T> {
-  
-    public void clear() {
+public class VideoAngle {
+    public static VideoAngle valueOf(String viewAngle) {
+        return null;
     }
 }

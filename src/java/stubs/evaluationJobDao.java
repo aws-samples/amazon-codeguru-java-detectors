@@ -5,8 +5,8 @@
 
 package stubs;
 
-public class DynamoDBMapperCollection<T> {
-  
-    public void clear() {
+public class evaluationJobDao {
+    public static ActivityJobItem loadEvaluationJob(String activityJobArn) {
+        return null;
     }
 }

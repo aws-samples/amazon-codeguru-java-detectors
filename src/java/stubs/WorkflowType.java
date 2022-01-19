@@ -5,8 +5,8 @@
 
 package stubs;
 
-public class DynamoDBMapperCollection<T> {
-  
-    public void clear() {
+public class WorkflowType {
+    public ActivityType getActivityType() {
+        return null;
     }
 }

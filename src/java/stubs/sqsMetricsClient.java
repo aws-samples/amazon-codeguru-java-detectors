@@ -5,8 +5,8 @@
 
 package stubs;
 
-public class DynamoDBMapperCollection<T> {
-  
-    public void clear() {
+public class sqsMetricsClient {
+    public static void changeMessageVisibility(String queueName, String handle, String timeout) {
+
     }
 }
