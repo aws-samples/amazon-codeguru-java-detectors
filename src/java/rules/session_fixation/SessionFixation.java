@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configurers.SessionMan
 public class SessionFixation {
 
     // {fact rule=session-fixation@v1.0 defects=1}
-    public Object sessionFixationConfigurerNonCompliant(SessionManagementConfigurer.SessionFixationConfigurer sessionFixationConfigurer) {
+    public Object sessionFixationConfigurerNoncompliant(SessionManagementConfigurer.SessionFixationConfigurer sessionFixationConfigurer) {
         // Noncompliant: session fixation protection is disabled.
         return sessionFixationConfigurer.none();
     }

@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 // {fact rule=thread-safety-class-violations@v1.0 defects=1}
 @ThreadSafe
-public class ThreadSafetyClassViolationsNonCompliant {
+public class ThreadSafetyClassViolationsNoncompliant {
 
     private HashMap<String, FileInfo> fileInfoMap = new HashMap<String, FileInfo>();
 

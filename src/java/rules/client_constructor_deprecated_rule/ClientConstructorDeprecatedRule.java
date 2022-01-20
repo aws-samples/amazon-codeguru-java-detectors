@@ -12,7 +12,7 @@ import com.amazonaws.services.kinesis.AmazonKinesisClientBuilder;
 public class ClientConstructorDeprecatedRule {
 
     // {fact rule=client-constructor-deprecated-rule@v1.0 defects=1}
-    public void createKinesisClientNonCompliant(){
+    public void createKinesisClientNoncompliant(){
         // Noncompliant: deprecated client constructor used.
         AmazonKinesisClient producerKinesisClient = new AmazonKinesisClient();
     }

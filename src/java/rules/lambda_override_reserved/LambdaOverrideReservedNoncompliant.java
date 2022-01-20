@@ -10,7 +10,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import java.util.Map;
 
 // {fact rule=lambda-override-reserved@v1.0 defects=1}
-public class LambdaOverrideReservedNonCompliant implements RequestHandler<String, Void> {
+public class LambdaOverrideReservedNoncompliant implements RequestHandler<String, Void> {
     public Void handleRequest(String requestEvent, Context context) {
         final Map<String, String> environment = new ProcessBuilder().environment();
         // Noncompliant: overrides reserved environment variable names in a Lambda function.

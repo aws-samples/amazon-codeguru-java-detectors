@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AwsParseErrorMessage {
     // {fact rule=aws-parse-error-message@v1.0 defects=1}
-    public void branchingNonCompliant() {
+    public void branchingNoncompliant() {
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
         try {
             s3Client.doesObjectExist("bucketName", "key");

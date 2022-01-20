@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NullCheckCacheResponseMetadata {
 
     // {fact rule=null-check-cache-response-metadata@v1.0 defects=1}
-    public void getCachedResponseMetadataNonCompliant(AmazonWebServiceRequest request, AmazonS3 amazonS3Client) {
+    public void getCachedResponseMetadataNoncompliant(AmazonWebServiceRequest request, AmazonS3 amazonS3Client) {
         S3ResponseMetadata responseMetadata = amazonS3Client.getCachedResponseMetadata(request);
         // Noncompliant: uses the result of getCachedResponseMetadata without null-checking it.
         log.info("Request ID: " + responseMetadata.getRequestId());

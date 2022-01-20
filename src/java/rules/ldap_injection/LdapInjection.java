@@ -16,7 +16,7 @@ import javax.naming.NamingEnumeration;
 public class LdapInjection {
 
     // {fact rule=ldap-injection@v1.0 defects=1}
-    public void ldapSearchNonCompliant(HttpServletRequest request) {
+    public void ldapSearchNoncompliant(HttpServletRequest request) {
         try {
             DirContext directoryContext = new InitialDirContext();
             SearchControls controls = new SearchControls();

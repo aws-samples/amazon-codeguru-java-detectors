@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 
 public class NullPointerDereference {
     // {fact rule=null-pointer-dereference@v1.0 defects=1}
-    private Double nullCheckPointerNonCompliant(@Nullable Double digit) {
+    private Double nullCheckPointerNoncompliant(@Nullable Double digit) {
         // Noncompliant: avoids null checks before dereferencing the pointer.
         return digit + 1.0;
     }

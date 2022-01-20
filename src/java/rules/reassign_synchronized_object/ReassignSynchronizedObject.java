@@ -8,7 +8,7 @@ package rules.reassign_synchronized_object;
 public class ReassignSynchronizedObject {
     Object mutex, mutex_one;
     // {fact rule=reassign-synchronized-object@v1.0 defects=1}
-    private void assignSynchronizedObjectNonCompliant() {
+    private void assignSynchronizedObjectNoncompliant() {
         // Noncompliant: synchronized objects re-assigned in the same synchronized block.
         synchronized (mutex) {
             mutex = new Object();

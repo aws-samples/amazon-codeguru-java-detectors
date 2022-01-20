@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 public class CrossSiteRequestForgery {
 
     // {fact rule=cross-site-request-forgery@v1.0 defects=1}
-    public void configureCsrfNonCompliant(HttpSecurity security) throws Exception {
+    public void configureCsrfNoncompliant(HttpSecurity security) throws Exception {
         // Noncompliant: disables CSRF protection.
         security.csrf().disable();
     }

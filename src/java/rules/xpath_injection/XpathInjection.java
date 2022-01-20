@@ -13,7 +13,7 @@ import javax.xml.xpath.XPathExpressionException;
 public class XpathInjection {
 
     // {fact rule=xpath-injection@v1.0 defects=1}
-    public void evaluateExpressionNonCompliant(HttpServletRequest request, XPath xpath, Document xml)
+    public void evaluateExpressionNoncompliant(HttpServletRequest request, XPath xpath, Document xml)
             throws XPathExpressionException {
         String employeeID = request.getParameter("employeeID");
         String expression = "/employees/" + employeeID + "/sales/monthly";

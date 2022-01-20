@@ -23,11 +23,11 @@ class PropertiesNoncompliant {
 }
 
 @ThreadSafe
-class ThreadSafetyViolationNonCompliant {
+class ThreadSafetyViolationNoncompliant {
     private final PropertiesNoncompliant properties = new PropertiesNoncompliant();
     private final ReentrantLock lock = new ReentrantLock();
 
-    public void syncReadCallOutsideNonCompliant(int i) {
+    public void syncReadCallOutsideNoncompliant(int i) {
         // Noncompliant: violates thread safety by indirectly reading without synchronization.
         if (properties.getParameter() > i) {
             lock.lock();

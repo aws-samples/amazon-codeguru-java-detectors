@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class ResourceLeak {
     // {fact rule=resource-leak@v1.0 defects=1}
-    public List<Path> autoCloseableStreamNonCompliant(final Path path) throws Exception {
+    public List<Path> autoCloseableStreamNoncompliant(final Path path) throws Exception {
         final List<Path> files;
         // Noncompliant: does not close the auto-closeable streams of file system objects.
         Stream<Path> pathStream = Files.walk(path);

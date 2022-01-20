@@ -15,7 +15,7 @@ import com.amazonaws.util.IOUtils;
 public class S3ObjectMetadataContentLengthCheck {
 
     // {fact rule=s3-object-metadata-content-length-check@v1.0 defects=1}
-    public void s3PutOjectFromStreamNonCompliant(AmazonS3 s3Client, File inputFile) throws FileNotFoundException {
+    public void s3PutOjectFromStreamNoncompliant(AmazonS3 s3Client, File inputFile) throws FileNotFoundException {
         String s3Bucket = "sample-bucket";
         FileInputStream inputStream = null;
         try {

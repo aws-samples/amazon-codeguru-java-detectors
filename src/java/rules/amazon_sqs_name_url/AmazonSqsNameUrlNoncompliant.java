@@ -11,7 +11,7 @@ import stubs.sqsMetricsClient;
 import java.util.concurrent.Callable;
 
 // {fact rule=amazon-sqs-name-url@v1.0 defects=1}
-public abstract class AmazonSqsNameUrlNonCompliant implements Callable<Message> {
+public abstract class AmazonSqsNameUrlNoncompliant implements Callable<Message> {
 
     public void non_compliant() {
         final String queueName = "queueName";

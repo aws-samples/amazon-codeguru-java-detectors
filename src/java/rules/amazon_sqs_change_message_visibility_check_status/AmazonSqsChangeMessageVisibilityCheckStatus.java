@@ -16,7 +16,7 @@ import static java.lang.String.format;
 public class AmazonSqsChangeMessageVisibilityCheckStatus {
 
     // {fact rule=amazon-sqs-change-message-visibility-check-status@v1.0 defects=1}
-    public void changeSqsMessageVisibilityNonCompliant(AmazonSQS amazonSqsClient, ChangeMessageVisibilityRequest request) {
+    public void changeSqsMessageVisibilityNoncompliant(AmazonSQS amazonSqsClient, ChangeMessageVisibilityRequest request) {
         // Noncompliant: MessageNotInFlight exception is not checked when changing message visibility.
         amazonSqsClient.changeMessageVisibility(request);
     }

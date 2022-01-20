@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class InsecureCorsPolicy {
     // {fact rule=insecure-cors-policy@v1.0 defects=1}
-    public void allowOriginNonCompliant(HttpServletResponse response) {
+    public void allowOriginNoncompliant(HttpServletResponse response) {
         // Noncompliant: the Access-Control-Allow-Origin is set to allow any domain.
         response.setHeader("Access-Control-Allow-Origin", "*");
     }

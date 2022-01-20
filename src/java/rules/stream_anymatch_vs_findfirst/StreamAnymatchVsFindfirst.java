@@ -12,7 +12,7 @@ public class StreamAnymatchVsFindfirst {
     Collection<String> col;
 
     // {fact rule=stream-anymatch-vs-findfirst@v1.0 defects=1}
-    boolean streamCollectionNonCompliant(final Collection<String> col) {
+    boolean streamCollectionNoncompliant(final Collection<String> col) {
         // Noncompliant: uses a chain of "filter", "findFirst" and "isPresent" stream methods over anyMatch.
         return col.stream()
                 .filter(Objects::isNull)

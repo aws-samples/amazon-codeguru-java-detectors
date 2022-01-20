@@ -12,7 +12,7 @@ import static java.lang.String.format;
 @Slf4j
 public class StringFormatArguments {
     // {fact rule=string-format-arguments@v1.0 defects=1}
-    void formatStringNonCompliant(final File file) {
+    void formatStringNoncompliant(final File file) {
         final long length = file.length();
         // Noncompliant: avoids using the correct format strings for their argument types.
         final String s = format("File length is %s", length);

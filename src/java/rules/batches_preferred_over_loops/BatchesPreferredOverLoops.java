@@ -12,7 +12,7 @@ import java.util.List;
 public class BatchesPreferredOverLoops {
 
     // {fact rule=batches-preferred-over-loops@v1.0 defects=1}
-    public void deleteObjectsNonCompliant(AmazonS3 s3Client, List<DeleteObjectsRequest.KeyVersion> keys,
+    public void deleteObjectsNoncompliant(AmazonS3 s3Client, List<DeleteObjectsRequest.KeyVersion> keys,
                                           String bucketName) throws SdkClientException {
         // Noncompliant: creates a separate request per item.
         for (final DeleteObjectsRequest.KeyVersion key : keys) {

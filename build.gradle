@@ -19,7 +19,7 @@ sourceSets {
         java {
             srcDir 'src/java'
             exclude 'rules/file_syntax_error/FileSyntaxError.java',
-                    'rules/dynamodb_transaction_library/DynamodbTransactionLibraryNonCompliant.java'
+                    'rules/dynamodb_transaction_library/DynamodbTransactionLibraryNoncompliant.java'
         }
     }
 }

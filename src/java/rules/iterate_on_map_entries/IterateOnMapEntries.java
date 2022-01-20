@@ -11,7 +11,7 @@ import java.util.Map;
 public class IterateOnMapEntries {
 
     // {fact rule=iterate-on-map-entries@v1.0 defects=1}
-    public void iterateOnKeySetUsingValuesNonCompliant(Map<String, String> map) {
+    public void iterateOnKeySetUsingValuesNoncompliant(Map<String, String> map) {
         // Noncompliant: iterate the set of keys and get the value of each key from the map.
         for (String name : map.keySet())
             System.out.println("Value: " + map.get(name));

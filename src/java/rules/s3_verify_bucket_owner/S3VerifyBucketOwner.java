@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 public class S3VerifyBucketOwner {
     // {fact rule=s3-verify-bucket-owner@v1.0 defects=1}
-    public void putObjectNonCompliant() {
+    public void putObjectNoncompliant() {
         S3Client s3Client = S3Client.create();
         // Noncompliant: the account that owns the bucket is not specified in the request.
         PutObjectRequest request = PutObjectRequest.builder()

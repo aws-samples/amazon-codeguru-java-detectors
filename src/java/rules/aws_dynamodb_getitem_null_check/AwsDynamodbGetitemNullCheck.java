@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AwsDynamodbGetitemNullCheck {
 
     // {fact rule=aws-dynamodb-getitem-null-check@v1.0 defects=1}
-    public void dynamoDBGetItemNonCompliant(Map<String, AttributeValue> key, String tableName) {
+    public void dynamoDBGetItemNoncompliant(Map<String, AttributeValue> key, String tableName) {
         AmazonDynamoDB dynamoDBClient = AmazonDynamoDBClientBuilder.standard().build();
         GetItemRequest request = new GetItemRequest()
                 .withTableName(tableName)

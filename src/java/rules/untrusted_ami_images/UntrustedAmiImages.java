@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class UntrustedAmiImages {
 
     // {fact rule=untrusted-ami-images@v1.0 defects=1}
-    public void describeImagesNonCompliant(AmazonEC2 client) {
+    public void describeImagesNoncompliant(AmazonEC2 client) {
         final String imageName = "sample_image_name";
         final Filter filter = new Filter("name").withValues(imageName);
         // Noncompliant: images are filtered using name only.

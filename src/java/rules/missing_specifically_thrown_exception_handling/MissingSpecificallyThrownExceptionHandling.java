@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MissingSpecificallyThrownExceptionHandling {
 
     // {fact rule=missing-specifically-thrown-exception-handling@v1.0 defects=1}
-    public void exceptionHandlingNonCompliant()  {
+    public void exceptionHandlingNoncompliant()  {
         // Noncompliant: catch block handles generic Exception, but not SomeException.
         try {
             doSomething();

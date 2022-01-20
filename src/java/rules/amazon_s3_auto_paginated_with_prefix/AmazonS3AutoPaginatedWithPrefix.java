@@ -9,7 +9,7 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 public class AmazonS3AutoPaginatedWithPrefix {
 
     // {fact rule=amazon-s3-auto-paginated-with-prefix@v1.0 defects=1}
-    public void s3GetObjectsNonCompliant(AmazonS3 amazonS3Client, String bucketName) {
+    public void s3GetObjectsNoncompliant(AmazonS3 amazonS3Client, String bucketName) {
         String continuationToken = null;
         ListObjectsV2Request listObjectsV2Request = new ListObjectsV2Request().withBucketName(bucketName);
         ListObjectsV2Result listObjectsV2Result;

@@ -13,7 +13,7 @@ import javax.script.ScriptEngine;
 public class CodeInjection {
 
     // {fact rule=code-injection@v1.0 defects=1}
-    public void evaluateJavaScriptNonCompliant(HttpServletRequest request) throws ScriptException {
+    public void evaluateJavaScriptNoncompliant(HttpServletRequest request) throws ScriptException {
         final String parameter = request.getParameter("parameter");
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("JavaScript");

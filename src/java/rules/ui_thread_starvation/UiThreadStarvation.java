@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
 public class UiThreadStarvation {
     // {fact rule=ui-thread-starvation@v1.0 defects=1}
     @UiThread
-    void awaitOnMainNonCompliant(CountDownLatch latch) throws InterruptedException {
+    void awaitOnMainNoncompliant(CountDownLatch latch) throws InterruptedException {
         Object main = new Object();
         // Noncompliant: blocks calls in a user interface thread.
         latch.await();

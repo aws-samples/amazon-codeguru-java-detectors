@@ -8,7 +8,7 @@ package rules.concurrency_atomicity_violation;
 import java.util.concurrent.ConcurrentHashMap;
 
 // {fact rule=concurrency-atomicity-violation@v1.0 defects=1}
-public class ConcurrencyAtomicityViolationNonCompliant {
+public class ConcurrencyAtomicityViolationNoncompliant {
 
     private ConcurrentHashMap<String, String> concurrentMap = new ConcurrentHashMap<String, String>();
 

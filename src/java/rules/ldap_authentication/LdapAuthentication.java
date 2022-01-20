@@ -14,7 +14,7 @@ import java.util.Hashtable;
 public class LdapAuthentication {
 
     // {fact rule=ldap-authentication@v1.0 defects=1}
-    public void createDirContextNonCompliant(String password) throws NamingException {
+    public void createDirContextNoncompliant(String password) throws NamingException {
         Hashtable<String, Object> environment = new Hashtable<>();
         environment.put(Context.INITIAL_CONTEXT_FACTORY, "ldap context factory");
         environment.put(Context.PROVIDER_URL, "context provider url");

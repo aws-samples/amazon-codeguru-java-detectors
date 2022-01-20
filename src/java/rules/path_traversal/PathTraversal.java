@@ -12,7 +12,7 @@ import java.io.File;
 public class PathTraversal {
 
     // {fact rule=path-traversal@v1.0 defects=1}
-    public void createFileNonCompliant(HttpServletRequest request, HttpServletResponse response) {
+    public void createFileNoncompliant(HttpServletRequest request, HttpServletResponse response) {
         String basePath = "/var/example/base/";
         String relativePath = request.getParameter("relativePath");
         // Noncompliant: user-supplied relative path is not sanitized and could contain malicious special characters.

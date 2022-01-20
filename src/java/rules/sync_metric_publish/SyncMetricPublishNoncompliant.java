@@ -11,11 +11,11 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 
 // {fact rule=sync-metric-publish@v1.0 defects=1}
-public class SyncMetricPublishNonCompliant  implements RequestHandler<ScheduledEvent, Void> {
+public class SyncMetricPublishNoncompliant  implements RequestHandler<ScheduledEvent, Void> {
 
     AmazonCloudWatch cloudwatch;
 
-    public SyncMetricPublishNonCompliant() {
+    public SyncMetricPublishNoncompliant() {
         cloudwatch = AmazonCloudWatchClientBuilder.standard().withRegion(Regions.US_WEST_2.toString()).build();
     }
 
@@ -29,7 +29,7 @@ public class SyncMetricPublishNonCompliant  implements RequestHandler<ScheduledE
         MetricDatum metricDatum = new MetricDatum().withMetricName("TIME_ELAPSED")
                 .withUnit(StandardUnit.Milliseconds).withValue((double) timeElapsed);
         putMetricDataRequest.withNamespace("EXAMPLE_NAMESPACE").withMetricData(metricDatum);
-        // NonCompliant: uses CloudWatch to synchronically publish metrics from inside a Lambda.
+        // Noncompliant: uses CloudWatch to synchronically publish metrics from inside a Lambda.
         cloudwatch.putMetricData(putMetricDataRequest);
         return null;
     }

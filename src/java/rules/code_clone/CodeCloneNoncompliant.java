@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.util.Map;
 
 @Slf4j
-public class CodeCloneNonCompliant {
+public class CodeCloneNoncompliant {
     // {fact rule=code-clone@v1.0 defects=1}
     private boolean containsActivityVideoWithGivenAngleAndArn(final String kinesisVideoStreamArn,
                                                               final String viewAngle,
@@ -28,7 +28,7 @@ public class CodeCloneNonCompliant {
         return false;
     }
 
-    private boolean doesKvsExistForJobNonCompliant(final String kinesisVideoStreamArn,
+    private boolean doesKvsExistForJobNoncompliant(final String kinesisVideoStreamArn,
                                        final String viewAngle,
                                        final String activityJobArn,
                                        final WorkflowType workflowType) throws Exception {
@@ -54,7 +54,7 @@ public class CodeCloneNonCompliant {
         }
     }
 
-    private void updateVideoInfoInDynamoDBNonCompliant(final Path videoFilePath,
+    private void updateVideoInfoInDynamoDBNoncompliant(final Path videoFilePath,
                                            final VideoAngle viewAngle,
                                            final String s3BucketName,
                                            final String activityJobArn,
