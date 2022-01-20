@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-name: Reviewer CLI (Java 11)
+name: Reviewer
 
 on:
   pull_request:
@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   build:
-    name: Reviewer CLI (Java 11)
+    name: Reviewer
     runs-on: ubuntu-latest
     steps:
     - name: Assume IAM role
@@ -32,18 +32,18 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
         aws-region: us-west-2
-    
+
     - name: Check out repository
       uses: actions/checkout@v2
       if: steps.assume-iam-role.outcome == 'success'
       with:
         fetch-depth: 0
-        
-    - name: Set up JDK v11
+
+    - name: Set up JDK
       if: steps.assume-iam-role.outcome == 'success'
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: '8'
         distribution: 'adopt'
 
     - name: Build project with Gradle
@@ -52,67 +52,66 @@ jobs:
         chmod +x gradlew
         ./gradlew build
 
-    - name: Unzip CodeGuru Reviewer CLI
-      if: steps.assume-iam-role.outcome == 'success'
-      continue-on-error: false
-      run: |
-        unzip cli/aws-codeguru-cli.zip
-    
-    - name: Analyze whole repo with CodeGuru Reviewer CLI
-      if: steps.assume-iam-role.outcome == 'success'
-      continue-on-error: false
+    - name: Run CodeGuru Reviewer
       id: analysis
-      run: |
-        ./aws-codeguru-cli/bin/aws-codeguru-cli --region us-west-2 --no-prompt -r . -s src -b build/libs
+      uses: aws-actions/codeguru-reviewer@v1.1
+      if: steps.assume-iam-role.outcome == 'success'
+      continue-on-error: false
+      with:
+        s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
+        build_path: ./build/libs
 
-    - name: Upload full analysis results (JSON format) to workflow artifacts
+    - name: Upload full analysis results (SARIF format) to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        path: code-guru/recommendations.json
-        name: recommendations.json
+        name: codeguru-results-sarif-json
+        path: codeguru-results.sarif.json
 
-    - name: Save summaries of results to files on local disk
+    - name: Save results summary and ultra-summary to files on local disk
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
-        jq '[ .[] | {RuleId: .RuleMetadata.RuleId, File: .FilePath, Line: .StartLine} ]' \
-          code-guru/recommendations.json > code-guru/recommendations-summary.json
-        echo "Recommendations (Java 11)" > code-guru/recommendations-summary-table.txt
-        echo "ruleId filePath lineNumber" >> code-guru/recommendations-summary-table.txt
-        jq -r '.[] | {RuleId: .RuleMetadata.RuleId, File: .FilePath, Line: .StartLine} | join(" ")' \
-          code-guru/recommendations.json | sort >> code-guru/recommendations-summary-table.txt
+        jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine}' \
+          codeguru-results.sarif.json > codeguru-results-summary.json
+        jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join("  ")' \
+          codeguru-results.sarif.json > codeguru-results-ultra-summary.txt
 
-    - name: Upload JSON summary of results to workflow artifacts
+    - name: Upload results summary to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        path: code-guru/recommendations-summary.json
-        name: recommendations-summary.json
+        name: codeguru-results-summary-json
+        path: codeguru-results-summary.json
 
-    - name: Upload tabular summary of results to workflow artifacts
+    - name: Upload results ultra-summary to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        path: code-guru/recommendations-summary-table.txt
-        name: recommendations-summary-table.txt
-
-    - name: Print tabular summary of results to stdout
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      run: |
-        cat code-guru/recommendations-summary-table.txt | column -t
+        name: codeguru-results-ultra-summary-txt
+        path: codeguru-results-ultra-summary.txt
 
     - name: Find the number of the current PR
       uses: jwalton/gh-find-current-pr@v1
       id: findpr
-    
+
     - name: Add a comment to the current PR with summary of analysis results
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         append: false
-        header: codeguru-findings-java11
+        header: codeguru-findings
         number: ${{ steps.findpr.outputs.pr }}
-        path: code-guru/recommendations-summary-table.txt
+        path: codeguru-results-ultra-summary.txt
         # message does not seem to be displayed in comment when `path` option is used.
         message: |
           Summary of findings from CodeGuru Reviewer (more details in workflow artifacts)
+
+    ####### Uploading to GitHub's code scan results UX will only work once the repo is public.
+
+    # - name: Upload analysis results to be shown on the GitHub Security Scans UX
+    #   if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+    #   uses: github/codeql-action/upload-sarif@v1
+    #   with:
+    #     sarif_file: codeguru-results.sarif.json
+
+
