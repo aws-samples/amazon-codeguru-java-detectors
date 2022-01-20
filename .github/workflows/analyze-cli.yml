@@ -7,7 +7,7 @@ name: Reviewer CLI
 
 on:
   pull_request:
-    # for all branches
+    # for all branches (no filter)
   push:
     # only main
     branches:
