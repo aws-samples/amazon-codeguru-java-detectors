@@ -5,7 +5,13 @@
 
 name: Reviewer CLI
 
-on: [pull_request]
+on:
+  pull_request:
+    # for all branches
+  push:
+    # only main
+    branches:
+      main
 
 permissions:
   id-token: write
