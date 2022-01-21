@@ -100,11 +100,6 @@ jobs:
         name: codeguru-results-ultra-summary-txt
         path: codeguru-results-ultra-summary.txt
 
-    - name: Print tabular summary of results to stdout
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      run: |
-        cat codeguru-results-ultra-summary.txt | column -t
-
     - name: Find the number of the current PR
       uses: jwalton/gh-find-current-pr@v1
       id: findpr
@@ -120,6 +115,11 @@ jobs:
         # message does not seem to be displayed in comment when `path` option is used.
         message: |
           Summary of findings from CodeGuru Reviewer (more details in workflow artifacts)
+
+    - name: Print summary of results to stdout
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      run: |
+        cat codeguru-results-ultra-summary.txt
 
     ####### Uploading to GitHub's code scan results UX will only work once the repo is public.
 
