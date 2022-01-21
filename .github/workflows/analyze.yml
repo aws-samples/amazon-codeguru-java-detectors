@@ -13,6 +13,7 @@ on:
     branches:
       main
   workflow_dispatch:
+    # manual trigger
     inputs:
       logLevel:
         description: 'Log level'
