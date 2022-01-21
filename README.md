@@ -6,7 +6,7 @@ CodeGuru Reviewer finds defects on Java and Python code. For more information ab
 
 This repo demonstrates some of CodeGuru Reviewer's Java detectors. For more descriptions on each detector, see our Detector Library. To see the Python code repo, click here.
 
-## Getting Started with the CodeGuru Reviewer GitHub Action
+## Try out the CodeGuru Reviewer GitHub Action on this example repo
 
 You can use this code repository to try out CodeGuru Reviewer at no cost to your AWS account
 
@@ -22,7 +22,11 @@ A CodeGuru Reviewer GitHub Action workflow template has already been added to th
 3. Click on the Actions tab (next to pull requests)
 4. Click on the Reviewer Workflow
 5. Click "Run workflow" 
-6. Navigate to the Security tab to see results (It should take 5-10 min)
+6. Navigate to the Security tab to see results (It should take 5-10 min). GitHub only enables the security tab for free on public repositories. 
+
+## Try out the CodeGuru Reviewer GitHub Action on your own repo
+
+You can copy and paste the CodeGuru Reviewer GitHub Action .yml you made in the Setup step to your own personal repo. You may need to update the build logic and build_path on the .yml file to make sure it matches your build system. If you do not have GitHub Advanced Security, you will be able to view your findings within the AWS Console.
 
 ## Getting Help
 
