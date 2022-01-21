@@ -110,7 +110,7 @@ jobs:
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         append: false
-        header: codeguru-findings-java11
+        header: analyze-cli-java11
         number: ${{ steps.findpr.outputs.pr }}
         path: code-guru/recommendations-summary-table.txt
         # message does not seem to be displayed in comment when `path` option is used.
