@@ -116,6 +116,11 @@ jobs:
         message: |
           Summary of findings from CodeGuru Reviewer (more details in workflow artifacts)
 
+    - name: Print summary of results to stdout
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      run: |
+        cat codeguru-results-ultra-summary.txt
+
     ####### Uploading to GitHub's code scan results UX will only work once the repo is public.
 
     # - name: Upload analysis results to be shown on the GitHub Security Scans UX
