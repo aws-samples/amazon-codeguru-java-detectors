@@ -11,7 +11,7 @@ import java.util.concurrent.TimeoutException;
 
 public class InfiniteLoop {
 
-    // {fact rule=infinte-loop@v1.0 defects=1}
+    // {fact rule=infinite-loop@v1.0 defects=1}
     public String loopControlNoncompliant() {
         ResultClass resultClass = new ResultClass();
         // Noncompliant: does not have loop control flow to prevent an infinite loop.
@@ -26,7 +26,7 @@ public class InfiniteLoop {
     }
     // {/fact}
 
-    // {fact rule=infinte-loop@v1.0 defects=0}
+    // {fact rule=infinite-loop@v1.0 defects=0}
     public String loopControlCompliant() {
         ResultClass resultClass = new ResultClass();
         // Compliant: has loop control flow to prevent an infinite loop.
