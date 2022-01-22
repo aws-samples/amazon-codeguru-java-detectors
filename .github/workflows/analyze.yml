@@ -30,8 +30,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  build:
-    name: Reviewer
+  analyze:
     runs-on: ubuntu-latest
     steps:
     - name: Assume IAM role
