@@ -4,7 +4,7 @@ Amazon CodeGuru Reviewer is an AWS service that uses program analysis and machin
 
 CodeGuru Reviewer finds defects in Java and Python code. For more information about how to set up and use CodeGuru Reviewer, see the [Amazon CodeGuru Reviewer User Guide](https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/welcome.html)
 
-This repo demonstrates some of CodeGuru Reviewer's Java detectors. For more descriptions on each detector, see our Detector Library. To see the Python code repo, click [here](https://github.com/aws-samples/amazon-codeguru-reviewer-python-detectors).
+This repo demonstrates some of CodeGuru Reviewer's Java detectors. For more descriptions of each detector, see our Detector Library. To see the Python code repo, click [here](https://github.com/aws-samples/amazon-codeguru-reviewer-python-detectors).
 
 ## Try out the CodeGuru Reviewer GitHub Action on this example repo
 
