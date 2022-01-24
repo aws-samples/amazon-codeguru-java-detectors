@@ -20,7 +20,7 @@ A CodeGuru Reviewer GitHub Action workflow template has already been added to th
 1. Fork this repo
 2. In .github/workflows/analyze.yml, add your ARN, region and S3 bucket name from the prequisite step above and commit this change
 3. Click on the Actions tab (next to pull requests)
-4. Click on the Reviewer Workflow
+4. Click on the CodeGuru Reviewer Workflow
 5. Click "Run workflow" 
 6. Navigate to the Security tab to see results (It should take 5-10 min). GitHub only enables the security tab for free on public repositories. 
 
