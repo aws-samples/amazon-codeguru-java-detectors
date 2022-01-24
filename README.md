@@ -2,7 +2,7 @@
 
 Amazon CodeGuru Reviewer is an AWS service that uses program analysis and machine learning to detect potential defects that are difficult for developers to find and offers suggestions for improvement. 
 
-CodeGuru Reviewer finds defects on Java and Python code. For more information about how to set up and use CodeGuru Reviewer, see the Amazon CodeGuru Reviewer User Guide.
+CodeGuru Reviewer finds defects in Java and Python code. For more information about how to set up and use CodeGuru Reviewer, see the Amazon CodeGuru Reviewer User Guide.
 
 This repo demonstrates some of CodeGuru Reviewer's Java detectors. For more descriptions on each detector, see our Detector Library. To see the Python code repo, click here.
 
