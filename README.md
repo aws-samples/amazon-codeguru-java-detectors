@@ -2,9 +2,9 @@
 
 Amazon CodeGuru Reviewer is an AWS service that uses program analysis and machine learning to detect potential defects that are difficult for developers to find and offers suggestions for improvement. 
 
-CodeGuru Reviewer finds defects in Java and Python code. For more information about how to set up and use CodeGuru Reviewer, see the Amazon CodeGuru Reviewer User Guide.
+CodeGuru Reviewer finds defects in Java and Python code. For more information about how to set up and use CodeGuru Reviewer, see the [Amazon CodeGuru Reviewer User Guide](https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/welcome.html)
 
-This repo demonstrates some of CodeGuru Reviewer's Java detectors. For more descriptions on each detector, see our Detector Library. To see the Python code repo, click here.
+This repo demonstrates some of CodeGuru Reviewer's Java detectors. For more descriptions on each detector, see our Detector Library. To see the Python code repo, click [here](https://github.com/aws-samples/amazon-codeguru-reviewer-python-detectors).
 
 ## Try out the CodeGuru Reviewer GitHub Action on this example repo
 
@@ -12,7 +12,7 @@ You can use this code repository to try out CodeGuru Reviewer at no cost to your
 
 ### Prequisites
 
-In order to use the CodeGuru Reviewer GitHub Action to run a scan on this repo, you will first need to first create a suitable Role, S3 Bucket, and Policy in your AWS account. You can do this by using the AWS CDK for Typescript and following the instructions here.
+In order to use the CodeGuru Reviewer GitHub Action to run a scan on this repo, you will first need to first create a suitable Role, S3 Bucket, and Policy in your AWS account. You can do this by using the AWS CDK for Typescript and following the instructions [here](https://github.com/aws-samples/aws-codeguru-reviewer-cicd-cdk-sample).
 
 ### Setup
 A CodeGuru Reviewer GitHub Action workflow template has already been added to this repo. To see CodeGuru Reviewer in action:
