@@ -38,7 +38,7 @@ You can copy and paste the CodeGuru Reviewer GitHub Action .yml you made in the 
 Use the community resources below for getting help with AWS CodeGuru Reviewer
 
 Use GitHub issues to report bugs and request features.
-Open a support ticket with AWS Support.
+Open a support ticket with [AWS Support](https://docs.aws.amazon.com/awssupport/latest/user/getting-started.html).
 If you think you may have found a bug, open a bug report.
 For contributing guidelines, refer to CONTRIBUTING.md.
 
