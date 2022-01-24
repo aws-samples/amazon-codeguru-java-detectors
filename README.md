@@ -26,7 +26,12 @@ A CodeGuru Reviewer GitHub Action workflow template has already been added to th
 
 ## Try out the CodeGuru Reviewer GitHub Action on your own repo
 
-You can copy and paste the CodeGuru Reviewer GitHub Action .yml you made in the Setup step to your own personal repo. You may need to update the build logic and build_path on the .yml file to make sure it matches your build system. If you do not have GitHub Advanced Security, you will be able to view your findings within the AWS Console.
+You can copy and paste the CodeGuru Reviewer GitHub Action .yml you made in the Setup step to your own personal repo. However, please take note of the following items:
+
+- If you use a build system other than Gradle, you may need to edit the build step using the appropriate command for your build system.
+- If your build system doesn't place the resulting .jar files in build/libs, you may need to edit the build_path field in the analyze.yml workflow.
+- If you do not have GitHub Advanced Security, you will still be able to view your findings within the AWS Console. You can also use tools like jq to postprocess the findings within your workflow. If you print some of the findings to stdout, you will see them in your workflow's output log.
+
 
 ## Getting Help
 
