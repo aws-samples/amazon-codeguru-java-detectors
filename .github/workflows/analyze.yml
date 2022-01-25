@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-name: Reviewer
+name: CodeGuru Reviewer
 
 on:
   pull_request:
@@ -30,8 +30,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  build:
-    name: Reviewer
+  analyze:
     runs-on: ubuntu-latest
     steps:
     - name: Assume IAM role
