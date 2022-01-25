@@ -8,7 +8,7 @@ This repo demonstrates some of CodeGuru Reviewer's Java detectors. For more desc
 
 ## Try out the CodeGuru Reviewer GitHub Action on this example repo
 
-You can use this code repository to try out CodeGuru Reviewer at no cost to your AWS account
+You can use this code repository to try out CodeGuru Reviewer using your AWS credentials
 
 ### Prequisites
 
