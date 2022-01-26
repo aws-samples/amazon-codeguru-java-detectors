@@ -6,14 +6,7 @@
 name: CodeGuru Reviewer
 
 on:
-  pull_request:
-    # for all branches (no filter)
-  push:
-    # only main
-    branches:
-      main
   workflow_dispatch:
-    # manual trigger
     inputs:
       logLevel:
         description: 'Log level'
@@ -26,8 +19,6 @@ permissions:
   id-token: write
   contents: read
   security-events: write
-  issues: write
-  pull-requests: write
 
 jobs:
   analyze:
@@ -73,60 +64,34 @@ jobs:
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        name: codeguru-results-sarif-json
+        name: codeguru-results.sarif.json
         path: codeguru-results.sarif.json
 
-    - name: Save results summary and ultra-summary to files on local disk
+    ### The following step only works for free if your repo is public.
+
+    - name: Upload full analysis results so they are shown on the GitHub Security Scans UX
+      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: codeguru-results.sarif.json
+
+    ### The following steps are optional.
+
+    - name: Save a summary of the results to a file on local disk
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
-        jq '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine}' \
-          codeguru-results.sarif.json > codeguru-results-summary.json
-        echo "CICD Action:" > codeguru-results-ultra-summary.txt
-        echo "ruleId filePath lineNumber" >> codeguru-results-ultra-summary.txt
-        jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join("  ")' \
-          codeguru-results.sarif.json | sort >> codeguru-results-ultra-summary.txt
+        echo "ruleId,filePath,lineNumber" > codeguru-results-summary.csv
+        jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(",")' \
+          codeguru-results.sarif.json | sort >> codeguru-results-summary.csv
 
     - name: Upload results summary to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        name: codeguru-results-summary-json
-        path: codeguru-results-summary.json
-
-    - name: Upload results ultra-summary to workflow artifacts
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: actions/upload-artifact@v2
-      with:
-        name: codeguru-results-ultra-summary-txt
-        path: codeguru-results-ultra-summary.txt
-
-    - name: Find the number of the current PR
-      uses: jwalton/gh-find-current-pr@v1
-      id: findpr
-
-    - name: Add a comment to the current PR with summary of analysis results
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: marocchino/sticky-pull-request-comment@v2
-      with:
-        append: false
-        header: analyze
-        number: ${{ steps.findpr.outputs.pr }}
-        path: codeguru-results-ultra-summary.txt
-        # message does not seem to be displayed in comment when `path` option is used.
-        message: |
-          Summary of findings from CodeGuru Reviewer (more details in workflow artifacts)
+        name: codeguru-results-summary.csv
+        path: codeguru-results-summary.csv
 
     - name: Print summary of results to stdout
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      run: |
-        cat codeguru-results-ultra-summary.txt
-
-    ####### Uploading to GitHub's code scan results UX will only work once the repo is public.
-
-    # - name: Upload analysis results to be shown on the GitHub Security Scans UX
-    #   if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-    #   uses: github/codeql-action/upload-sarif@v1
-    #   with:
-    #     sarif_file: codeguru-results.sarif.json
-
+      run: cat codeguru-results-summary.csv
 
