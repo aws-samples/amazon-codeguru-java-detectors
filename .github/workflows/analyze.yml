@@ -89,7 +89,7 @@ jobs:
     #
     # Create a sorted summary of recommendations in CSV format (detector,filePath,lineNumber).
     # We do this because analyzing this repo (by design) produces lots of recommendations!
-    $
+    #
     # This summary omits most of the useful information in the full results: recommendation text,
     # mitigations, "Learn more" links, etcetera. But its compact format (one line per finding)
     # makes it useful as an overview, and to compute diffs between two analysis runs.
