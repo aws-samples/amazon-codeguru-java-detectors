@@ -8,5 +8,5 @@ package stubs;
 public class ActivityType {
     public static final ActivityType TRAINING = null;
     public static final ActivityType EVALUATION = null;
-    public static final ActivityType FINETUNING = null;
+    public static final ActivityType LEADERBOARD_SUBMISSION = null;
 }
