@@ -87,7 +87,7 @@ jobs:
     #
     # The following steps are optional.
     #
-    # Create a sorted summary of recommendations in CSV format (ruleId,filePath,lineNumber).
+    # Create a sorted summary of recommendations in CSV format (detector,filePath,lineNumber).
     # We do this because analyzing this repo (by design) produces lots of recommendations!
     $
     # This summary omits most of the useful information in the full results: recommendation text,
@@ -98,7 +98,7 @@ jobs:
     - name: Save a summary of the results to a file on local disk
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
-        echo "ruleId,filePath,lineNumber" > summary-of-results.csv
+        echo "detector,filePath,lineNumber" > summary-of-results.csv
         jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(",")' \
           results.sarif.json | sort >> summary-of-results.csv
 
