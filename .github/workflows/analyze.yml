@@ -63,48 +63,55 @@ jobs:
         build_path: ./build/libs
 
     - name: Postprocess SARIF file
-      run: jq '(..|objects|select(has("tags"))).tags |= (.|unique)' codeguru-results.sarif.json > fullresults.sarif.json
+      run: jq '(..|objects|select(has("tags"))).tags |= (.|unique)' codeguru-results.sarif.json > results.sarif.json
 
-    - name: Upload full analysis results (SARIF format) to workflow artifacts
+    - name: Upload SARIF file to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        name: fullresults.sarif.json
-        path: fullresults.sarif.json
+        name: results.sarif.json
+        path: results.sarif.json
 
     #
-    # The following step only works for free if your repo is public.
-    # Upload the full SARIF analysis results to the GitHub UX.
+    # Upload the SARIF analysis results to GitHub so that they appear on the GitHub UX.
+    #
+    # Note: This step will fail if your GitHub repo is private (unless you buy GitHub Advanced Security).
     #
 
-    - name: Upload full analysis results so they are shown on the GitHub Security Scans UX
+    - name: Upload SARIF file to GitHub Security Scans UX
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: github/codeql-action/upload-sarif@v1
       with:
-        sarif_file: fullresults.sarif.json
+        sarif_file: results.sarif.json
 
     #
     # The following steps are optional.
-    # Create a one-line-per-finding CSV summary of recommendations.
+    #
+    # Create a sorted summary of recommendations in CSV format (ruleId,filePath,lineNumber).
+    # We do this because analyzing this repo (by design) produces lots of recommendations!
+    $
+    # This summary omits most of the useful information in the full results: recommendation text,
+    # mitigations, "Learn more" links, etcetera. But its compact format (one line per finding)
+    # makes it useful as an overview, and to compute diffs between two analysis runs.
     #
 
     - name: Save a summary of the results to a file on local disk
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       run: |
-        echo "ruleId,filePath,lineNumber" > summary.csv
+        echo "ruleId,filePath,lineNumber" > summary-of-results.csv
         jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(",")' \
-          fullresults.sarif.json | sort >> summary.csv
+          results.sarif.json | sort >> summary-of-results.csv
 
     - name: Upload results summary to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
       with:
-        name: summary.csv
-        path: summary.csv
+        name: summary-of-results.csv
+        path: summary-of-results.csv
 
-    - name: Print summary of results to stdout
+    - name: Print CSV summary of analysis results to the action log
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      run: cat summary.csv
+      run: cat summary-of-results.csv
 
 
 
