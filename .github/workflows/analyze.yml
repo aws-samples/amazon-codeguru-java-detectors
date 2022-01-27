@@ -62,13 +62,15 @@ jobs:
         s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
         build_path: ./build/libs
 
+    - name: Postprocess SARIF file
+      run: jq '(..|objects|select(has("tags"))).tags |= (.|unique)' codeguru-results.sarif.json) > fullresults.sarif.json
+
     - name: Upload full analysis results (SARIF format) to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      - run: jq '(..|objects|select(has("tags"))).tags |= (.|unique)' codeguru-results.sarif.json) > fullresults.sarif.json
-      - uses: actions/upload-artifact@v2
-        with:
-          name: fullresults.sarif.json
-          path: fullresults.sarif.json
+      uses: actions/upload-artifact@v2
+      with:
+        name: fullresults.sarif.json
+        path: fullresults.sarif.json
 
     #
     # The following step only works for free if your repo is public.
