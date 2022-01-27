@@ -41,6 +41,7 @@ dependencies {
     implementation("com.amazonaws:amazon-kinesis-client:1.6.3")
     implementation("com.amazonaws:aws-java-sdk-ssm:1.11.201")
     implementation("io.netty:netty-all:4.1.72.Final")
+    implementation("io.grpc:grpc-netty:1.44.0")
     implementation("org.springframework.security:spring-security-config:5.6.1")
     implementation("org.springframework:spring-web:5.3.14")
     implementation("org.springframework:spring-webmvc:5.3.14")

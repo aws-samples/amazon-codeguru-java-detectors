@@ -8,6 +8,8 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import stubs.Item;
+
 class SimplifiableCode {
 
     Gson gson;
