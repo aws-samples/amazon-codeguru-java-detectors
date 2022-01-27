@@ -62,9 +62,6 @@ jobs:
         s3_bucket: codeguru-reviewer-build-artifacts-048169001733-eu-north-1
         build_path: ./build/libs
 
-    - name: Postprocess SARIF file
-      run: jq '(..|objects|select(has("tags"))).tags |= (.|unique)' codeguru-results.sarif.json > results.sarif.json
-
     - name: Upload SARIF file to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
       uses: actions/upload-artifact@v2
