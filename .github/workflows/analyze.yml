@@ -63,7 +63,7 @@ jobs:
         build_path: ./build/libs
 
     - name: Postprocess SARIF file
-      run: jq '(..|objects|select(has("tags"))).tags |= (.|unique)' codeguru-results.sarif.json) > fullresults.sarif.json
+      run: jq '(..|objects|select(has("tags"))).tags |= (.|unique)' codeguru-results.sarif.json > fullresults.sarif.json
 
     - name: Upload full analysis results (SARIF format) to workflow artifacts
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
