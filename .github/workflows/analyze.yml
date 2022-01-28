@@ -6,6 +6,7 @@
 name: CodeGuru Reviewer
 
 on:
+  # On-demand analysis via "Run workflow" button.
   workflow_dispatch:
     inputs:
       logLevel:
@@ -14,6 +15,8 @@ on:
         default: 'debug'
       tags:
         description: 'Test scenario tags'
+  # GitHub disables any scheduled analyses by default when you fork a repo.
+  # Still, please remove these two lines if your fork doesn't need scheduled runs.
   schedule:
     - cron: '0 0/6 * * *'
 
@@ -32,7 +35,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
-        aws-region: eu-north-1
+        aws-region: us-west-2
 
     - name: Check out repository
       uses: actions/checkout@v2
@@ -59,7 +62,7 @@ jobs:
       if: steps.assume-iam-role.outcome == 'success'
       continue-on-error: false
       with:
-        s3_bucket: codeguru-reviewer-build-artifacts-048169001733-eu-north-1
+        s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
         build_path: ./build/libs
 
     - name: Upload SARIF file to workflow artifacts
