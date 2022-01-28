@@ -5,8 +5,8 @@
 
 package stubs;
 
-public class WorkflowType {
-    public ActivityType getActivityType() {
+public class finetuningJobDao {
+    public static ActivityJobItem loadFinetuningJob(String activityJobArn) {
         return null;
     }
 }
