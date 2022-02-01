@@ -20,7 +20,6 @@ class MissingTimeoutCheckOnAwaitTermination {
     // {/fact}
 
     // {fact rule=missing-timeout-check-on-awaittermination@v1.0 defects=0}
-    public void shutdownNonCompliant(ExecutorService executor) {
     public void shutdownCompliant(ExecutorService executor) {
         executor.shutdown();
         try {
