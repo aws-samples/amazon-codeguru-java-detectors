@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 
 class OutputIgnoredOnResultSetNext {
 
-    public long getCountNonCompliant(String getCountSqlQuery) {
-        Connection connection = connect();
+    DataSource dataSource;
+
+    // {fact rule=output-ignored-on-resultset-next@v1.0 defects=1}
+    public long getCountNonCompliant(String getCountSqlQuery) throws SQLException {
+        Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
@@ -17,17 +21,17 @@ class OutputIgnoredOnResultSetNext {
             // Noncompliant: code does not check if the ResultSet is empty.
             resultSet.next();
             return resultSet.getLong(1);
-        } catch (SQLException ex) {
-            throw new RuntimeException("Error reading from db connection and getting count", ex);
         } finally {
             preparedStatement.close();
             resultSet.close();
             connection.close();
         }
     }
+    // {/fact}
 
-    public long getCountCompliant(String getCountSqlQuery) {
-        Connection connection = connect();
+    // {fact rule=output-ignored-on-resultset-next@v1.0 defects=0}
+    public long getCountCompliant(String getCountSqlQuery) throws SQLException {
+        Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
@@ -37,14 +41,13 @@ class OutputIgnoredOnResultSetNext {
             if (resultSet.next()) {
                 return resultSet.getLong(1);
             } else {
-                return null;
+                return -1;
             }
-        } catch (SQLException ex) {
-            throw new RuntimeException("Error reading from db connection and getting count", ex);
         } finally {
             preparedStatement.close();
             resultSet.close();
             connection.close();
         }
     }
+    // {/fact}
 }

@@ -6,13 +6,16 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 class SuddenServiceShutdown {
 
+    // {fact rule=sudden-service-shutdown@v1.0 defects=1}
     void shutdownNonCompliant(ExecutorService executorService) throws InterruptedException {
         if (executorService != null) {
             // Noncompliant: shutdownNow is called which suddenly shuts down executorService.
             executorService.shutdownNow();
         }
     }
+    // {/fact}
 
+    // {fact rule=sudden-service-shutdown@v1.0 defects=0}
     void shutdownCompliant(ExecutorService executorService) throws InterruptedException {
         if (executorService != null) {
             // Compliant: attempts graceful shutdown before doing so forcefully.
@@ -23,4 +26,5 @@ class SuddenServiceShutdown {
             executorService.shutdownNow();
         }
     }
+    // {/fact}
 }

@@ -10,6 +10,7 @@ class MissingTimeoutCheckOnLatchAwait {
     private volatile Object result = null;
     private CountDownLatch completionLatch = new CountDownLatch(1);
 
+    // {fact rule=missing-timeout-check-on-latch-await@v1.0 defects=1}
     public Object getResultNonCompliant(long timeout, TimeUnit unit)
         throws InterruptedException, ExecutionException, TimeoutException {
 
@@ -17,7 +18,9 @@ class MissingTimeoutCheckOnLatchAwait {
         completionLatch.await(timeout, unit);
         return result;
     }
+    // {/fact}
 
+    // {fact rule=missing-timeout-check-on-latch-await@v1.0 defects=0}
     public Object getResultCompliant(long timeout, TimeUnit unit)
         throws InterruptedException, ExecutionException, TimeoutException {
 
@@ -27,4 +30,5 @@ class MissingTimeoutCheckOnLatchAwait {
         }
         return result;
     }
+    // {/fact}
 }

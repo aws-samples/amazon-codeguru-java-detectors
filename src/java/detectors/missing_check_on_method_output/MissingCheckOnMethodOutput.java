@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 class MissingCheckOnMethodOutput {
 
+    // {fact rule=missing-check-on-method-output@v1.0 defects=1}
     private void writeMessageNonCompliant(String dirName, String fileName, String message) {
         try {
             File dir = new File(dirName);
@@ -22,7 +23,9 @@ class MissingCheckOnMethodOutput {
             e.printStackTrace();
         }
     }
+    // {/fact}
 
+    // {fact rule=missing-check-on-method-output@v1.0 defects=0}
     private void writeMessageCompliant(String dirName, String fileName, String message) {
         try {
             File dir = new File(dirName);
@@ -42,4 +45,5 @@ class MissingCheckOnMethodOutput {
             e.printStackTrace();
         }
     }
+    // {/fact}
 }

@@ -1,4 +1,4 @@
-package rules.missing_timneout_check_on_awaittermination;
+package rules.missing_timeout_check_on_awaittermination;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 class MissingTimeoutCheckOnAwaitTermination {
 
+    // {fact rule=missing-timeout-check-on-awaittermination@v1.0 defects=1}
     public void shutdownNonCompliant(ExecutorService executor) {
         executor.shutdown();
         try {
@@ -16,7 +17,10 @@ class MissingTimeoutCheckOnAwaitTermination {
             log.warn("Failed to wait for all tasks to finish", e);
         }
     }
+    // {/fact}
 
+    // {fact rule=missing-timeout-check-on-awaittermination@v1.0 defects=0}
+    public void shutdownNonCompliant(ExecutorService executor) {
     public void shutdownCompliant(ExecutorService executor) {
         executor.shutdown();
         try {
@@ -28,4 +32,5 @@ class MissingTimeoutCheckOnAwaitTermination {
             log.warn("Failed to wait for all tasks to finish", e);
         }
     }
+    // {/fact}
 }
