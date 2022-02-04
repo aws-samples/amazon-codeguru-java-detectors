@@ -12,7 +12,7 @@ You can use this code repository to try out CodeGuru Reviewer using your AWS cre
 
 ### Prerequisites
 
-To use the CodeGuru Reviewer GitHub Action to scan a fork of this repo, you will first need to create a suitable Role, S3 Bucket, and Policy in your AWS account. You can do this automatically by following [these instructions](https://github.com/aws-samples/aws-codeguru-reviewer-cicd-cdk-sample).
+To use the CodeGuru Reviewer GitHub Action to scan a fork of this repo, you will first need to create a suitable Role, S3 Bucket, and Policy in your AWS account. You can do this automatically by following [these instructions](https://github.com/aws-samples/aws-codeguru-reviewer-cicd-cdk-sample#cdk-typescript-project-to-set-up-the-codeguru-reviewer-cicd-integration).
 
 ### Setup
 A CodeGuru Reviewer GitHub Action workflow template has already been added to this repo. To see CodeGuru Reviewer in action:
