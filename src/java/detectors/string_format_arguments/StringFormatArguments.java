@@ -7,7 +7,6 @@ package detectors.string_format_arguments;
 
 import lombok.extern.slf4j.Slf4j;
 import java.io.File;
-import static java.lang.String.format;
 
 @Slf4j
 public class StringFormatArguments {
@@ -15,7 +14,7 @@ public class StringFormatArguments {
     void formatStringNoncompliant(final File file) {
         final long length = file.length();
         // Noncompliant: avoids using the correct format strings for their argument types.
-        final String s = format("File length is %s", length);
+        final String s = String.format("File length is %s", length);
         log.info(s);
     }
     // {/fact}
@@ -24,7 +23,7 @@ public class StringFormatArguments {
     void formatStringCompliant(final File file) {
         final long length = file.length();
         // Compliant: uses the correct format strings for their argument types.
-        final String s = format("File length is %d", length);
+        final String s = String.format("File length is %d", length);
         log.info(s);
     }
     // {/fact}
