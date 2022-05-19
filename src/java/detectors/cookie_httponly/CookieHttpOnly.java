@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
 
 public class CookieHttpOnly{
-    // {fact rule=cookie_httponly@v1.0 defects=1}
+    // {fact rule=cookie-httponly@v1.0 defects=1}
     public void CookieHttpOnlyNoncompliant(HttpServletResponse res) {
         Cookie c = new Cookie("name", "not-null");
         c.setSecure(true);
@@ -18,7 +18,7 @@ public class CookieHttpOnly{
     }
     // {/fact}
 
-    // {fact rule=cookie_httponly@v1.0 defects=0}
+    // {fact rule=cookie-httponly@v1.0 defects=0}
     public void CookieHttpOnlyCompliant(HttpServletResponse res) {
         Cookie c = new Cookie("name", "not-null");
         c.setSecure(true);
