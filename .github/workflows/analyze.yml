@@ -80,7 +80,7 @@ jobs:
 
     - name: Upload SARIF file to GitHub Security Scans UX
       if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: codeguru-results.sarif.json
 
