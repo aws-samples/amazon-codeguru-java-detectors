@@ -13,19 +13,23 @@ public class PathTraversal {
 
     // {fact rule=path-traversal@v1.0 defects=1}
     public void createFileNoncompliant(HttpServletRequest request, HttpServletResponse response) {
-        String basePath = "/var/example/base/";
-        String relativePath = request.getParameter("relativePath");
-        // Noncompliant: user-supplied relative path is not sanitized and could contain malicious special characters.
-        File fileTarget = new File(basePath + relativePath);
+        String basePath = "/var/data/images/";
+        String desiredCategory = request.getParameter("category");
+        // Noncompliant: user-supplied relative path is not sanitized and could contain malicious characters.
+        File fileTarget = new File(basePath + desiredCategory);
     }
     // {/fact}
 
     // {fact rule=path-traversal@v1.0 defects=0}
     public void createFileCompliant(HttpServletRequest request) {
-        String basePath = "/var/example/base/";
+        String basePath = "/var/data/images/";
+        String desiredCategory = request.getParameter("category");
         // Compliant: user-supplied relative path is sanitized before use.
-        String relativePath = request.getParameter("relativePath").replaceAll("..", "");
-        File fileTarget = new File(basePath + relativePath);
+        if (desiredCategory.matches("[a-z]+")) {
+            File fileTarget = new File(basePath + desiredCategory);
+        } else {
+            throw new IllegalArgumentException("Invalid category name");
+        }
     }
     // {/fact}
 }
