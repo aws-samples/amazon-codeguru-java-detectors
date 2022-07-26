@@ -12,7 +12,7 @@ public class InsecureCookie {
     // {fact rule=insecure-cookie@v1.0 defects=1}
     public static void cookieInsecureByDefaultNoncompliant(HttpServletResponse response) {
         Cookie cookie = new Cookie("name", "value");
-        // Noncompliant: by default, the Cookie is not secure.
+        // Noncompliant: by default, the Cookie is not secure and not httpOnly.
         response.addCookie(cookie);
     }
     // {/fact}
@@ -22,6 +22,7 @@ public class InsecureCookie {
         Cookie cookie = new Cookie("name", "value");
         // Compliant: the Cookie is secured.
         cookie.setSecure(true);
+        cookie.setHttpOnly(true);
         response.addCookie(cookie);
     }
     // {/fact}
