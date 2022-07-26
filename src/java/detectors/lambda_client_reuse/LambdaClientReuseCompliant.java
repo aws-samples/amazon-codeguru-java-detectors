@@ -16,8 +16,9 @@ import com.amazonaws.regions.Regions;
 public class LambdaClientReuseCompliant implements RequestHandler<String, Void> {
 
     private AmazonS3 s3Client;
-
-    public void S3ClientCreatedCompliant() {
+    
+    public LambdaClientReuseCompliant() {
+        // Compliant: creates the client only once.
         this.s3Client = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.US_EAST_1).build();
     }
