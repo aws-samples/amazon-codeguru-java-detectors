@@ -12,7 +12,7 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 @Slf4j
 public class ClearTextCredentials {
 
-    // {fact rule=clear-text-credentials@v1.0 defects=1}
+    // {fact rule=sensitive-information-leak@v1.0 defects=1}
     public void logCredentialsNoncompliant() {
         String publicData = "some public data";
         AWSCredentials credentials = new DefaultAWSCredentialsProviderChain().getCredentials();
@@ -21,7 +21,7 @@ public class ClearTextCredentials {
     }
     // {/fact}
 
-    // {fact rule=clear-text-credentials@v1.0 defects=0}
+    // {fact rule=sensitive-information-leak@v1.0 defects=0}
     public void logCredentialsCompliant() {
         String publicData = "some public data";
         AWSCredentials credentials = new DefaultAWSCredentialsProviderChain().getCredentials();
