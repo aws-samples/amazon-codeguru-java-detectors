@@ -5,9 +5,9 @@
 
 package detectors.dynamodb_transaction_library;
 
+// {fact rule=dynamodb-transaction-library@v1.0 defects=1}
 import com.amazonaws.services.dynamodbv2.transactions.TransactionManager;
 
-// {fact rule=dynamodb-transaction-library@v1.0 defects=1}
 public class DynamodbTransactionLibraryNoncompliant {
     public void createTransactionNoncompliant() throws Exception {
         // Noncompliant: uses AWS Lab Transactions Library over DynamoDB native transactional APIs.
