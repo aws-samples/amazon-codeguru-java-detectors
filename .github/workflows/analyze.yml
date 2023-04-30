@@ -34,8 +34,8 @@ jobs:
       continue-on-error: true
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
-        aws-region: us-west-2
+        role-to-assume: arn:aws:iam::850063548647:role/GitHubActionRole
+        aws-region: us-east-1
 
     - name: Check out repository
       uses: actions/checkout@v2
@@ -62,7 +62,7 @@ jobs:
       if: steps.assume-iam-role.outcome == 'success'
       continue-on-error: false
       with:
-        s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
+        s3_bucket: codeguru-reviewer-build-artifacts-850063548647-us-east-1
         build_path: ./build/libs
 
     - name: Upload SARIF file to workflow artifacts
