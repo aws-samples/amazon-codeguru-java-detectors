@@ -12,6 +12,7 @@ public class MandatoryMethods {
         // Noncompliant: does not call mandatory methods on the object after its creation.
         PutParameterRequest putParameterRequest = new PutParameterRequest();
         putParameterRequest.setName("parameterName");
+        putParameterRequest.setDescription("parameterDescription");
     }
     // {/fact}
 
