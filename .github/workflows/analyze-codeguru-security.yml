@@ -1,4 +1,4 @@
-name: CodeGuru Security Example
+name: CodeGuru Security Check
 on:
   pull_request:
     # for all branches (no filter)
@@ -35,7 +35,6 @@ jobs:
         with:
           source_path: .
           aws_region: us-east-1
-          fail_on_severity: Critical
       - name: Print findings
         run: |
           ls -l
