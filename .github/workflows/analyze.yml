@@ -6,19 +6,23 @@
 name: CodeGuru Reviewer
 
 on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
   # On-demand analysis via "Run workflow" button.
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Log level'
+        description: "Log level"
         required: true
-        default: 'debug'
+        default: "debug"
       tags:
-        description: 'Test scenario tags'
+        description: "Test scenario tags"
   # GitHub disables any scheduled analyses by default when you fork a repo.
   # Still, please remove these two lines if your fork doesn't need scheduled runs.
-  schedule:
-    - cron: '0 0/6 * * *'
+  # schedule:
+  #   - cron: '0 0/6 * * *'
 
 permissions:
   id-token: write
@@ -29,89 +33,86 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-    - name: Assume IAM role
-      id: assume-iam-role
-      continue-on-error: true
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        role-to-assume: arn:aws:iam::850063548647:role/GitHubActionRole
-        aws-region: us-east-1
+      - name: Assume IAM role
+        id: assume-iam-role
+        continue-on-error: true
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::850063548647:role/GitHubActionRole
+          aws-region: us-east-1
 
-    - name: Check out repository
-      uses: actions/checkout@v2
-      if: steps.assume-iam-role.outcome == 'success'
-      with:
-        fetch-depth: 0
+      - name: Check out repository
+        uses: actions/checkout@v2
+        if: steps.assume-iam-role.outcome == 'success'
+        with:
+          fetch-depth: 0
 
-    - name: Set up JDK
-      if: steps.assume-iam-role.outcome == 'success'
-      uses: actions/setup-java@v2
-      with:
-        java-version: '8'
-        distribution: 'adopt'
+      - name: Set up JDK
+        if: steps.assume-iam-role.outcome == 'success'
+        uses: actions/setup-java@v2
+        with:
+          java-version: "8"
+          distribution: "adopt"
 
-    - name: Build project with Gradle
-      if: steps.assume-iam-role.outcome == 'success'
-      run: |
-        chmod +x gradlew
-        ./gradlew build
+      - name: Build project with Gradle
+        if: steps.assume-iam-role.outcome == 'success'
+        run: |
+          chmod +x gradlew
+          ./gradlew build
 
-    - name: Run CodeGuru Reviewer
-      id: analysis
-      uses: aws-actions/codeguru-reviewer@v1.1
-      if: steps.assume-iam-role.outcome == 'success'
-      continue-on-error: false
-      with:
-        s3_bucket: codeguru-reviewer-build-artifacts-850063548647-us-east-1
-        build_path: ./build/libs
+      - name: Run CodeGuru Reviewer
+        id: analysis
+        uses: aws-actions/codeguru-reviewer@v1.1
+        if: steps.assume-iam-role.outcome == 'success'
+        continue-on-error: false
+        with:
+          s3_bucket: codeguru-reviewer-build-artifacts-850063548647-us-east-1
+          build_path: ./build/libs
 
-    - name: Upload SARIF file to workflow artifacts
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: actions/upload-artifact@v2
-      with:
-        name: codeguru-results.sarif.json
-        path: codeguru-results.sarif.json
+      - name: Upload SARIF file to workflow artifacts
+        if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+        uses: actions/upload-artifact@v2
+        with:
+          name: codeguru-results.sarif.json
+          path: codeguru-results.sarif.json
 
-    #
-    # Upload the SARIF analysis results to GitHub so that they appear on the GitHub UX.
-    #
-    # Note: This step will fail if your GitHub repo is private (unless you buy GitHub Advanced Security).
-    #
+      #
+      # Upload the SARIF analysis results to GitHub so that they appear on the GitHub UX.
+      #
+      # Note: This step will fail if your GitHub repo is private (unless you buy GitHub Advanced Security).
+      #
 
-    - name: Upload SARIF file to GitHub Security Scans UX
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: codeguru-results.sarif.json
+      - name: Upload SARIF file to GitHub Security Scans UX
+        if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: codeguru-results.sarif.json
 
-    #
-    # The following steps are optional.
-    #
-    # Create a sorted summary of recommendations in CSV format (detector,filePath,lineNumber).
-    # We do this because analyzing this repo (by design) produces lots of recommendations!
-    #
-    # This summary omits most of the useful information in the full results: recommendation text,
-    # mitigations, "Learn more" links, etcetera. But its compact format (one line per finding)
-    # makes it useful as an overview, and to compute diffs between two analysis runs.
-    #
+      #
+      # The following steps are optional.
+      #
+      # Create a sorted summary of recommendations in CSV format (detector,filePath,lineNumber).
+      # We do this because analyzing this repo (by design) produces lots of recommendations!
+      #
+      # This summary omits most of the useful information in the full results: recommendation text,
+      # mitigations, "Learn more" links, etcetera. But its compact format (one line per finding)
+      # makes it useful as an overview, and to compute diffs between two analysis runs.
+      #
 
-    - name: Save a summary of the results to a file on local disk
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      run: |
-        echo "detector,filePath,lineNumber" > summary-of-results.csv
-        jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(",")' \
-          codeguru-results.sarif.json | sort >> summary-of-results.csv
+      - name: Save a summary of the results to a file on local disk
+        if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+        run: |
+          echo "detector,filePath,lineNumber" > summary-of-results.csv
+          jq -r '.runs[0].results[] | {ruleId: .ruleId, firstFile: .locations[0].physicalLocation.artifactLocation.uri, firstLine: .locations[0].physicalLocation.region.startLine} | join(",")' \
+            codeguru-results.sarif.json | sort >> summary-of-results.csv
 
-    - name: Upload results summary to workflow artifacts
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      uses: actions/upload-artifact@v2
-      with:
-        name: summary-of-results.csv
-        path: summary-of-results.csv
+      - name: Upload results summary to workflow artifacts
+        if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+        uses: actions/upload-artifact@v2
+        with:
+          name: summary-of-results.csv
+          path: summary-of-results.csv
 
-    - name: Print CSV summary of analysis results to the action log
-      if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
-      run: cat summary-of-results.csv
-
-
-
+      - name: Print CSV summary of analysis results to the action log
+        if: steps.assume-iam-role.outcome == 'success' && steps.analysis.outcome == 'success'
+        run: cat summary-of-results.csv
