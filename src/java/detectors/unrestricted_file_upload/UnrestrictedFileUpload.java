@@ -14,13 +14,14 @@ import org.springframework.util.StringUtils;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import javax.servlet.ServletException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class UnrestrictedFileUpload {
 
     // {fact rule=unrestricted-file-upload@v1.0 defects=1}
-    public void unrestrictedFileUploadNoncompliant(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void unrestrictedFileUploadNoncompliant(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("fileToUpload");
         InputStream fileInputStream = filePart.getInputStream();
         // Noncompliant: the uploaded file can have any extension.
@@ -31,7 +32,7 @@ public class UnrestrictedFileUpload {
     // {/fact}
 
     // {fact rule=unrestricted-file-upload@v1.0 defects=0}
-    public void unrestrictedFileUploadCompliant(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void unrestrictedFileUploadCompliant(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("fileToUpload");
         // Compliant: the uploaded file must have one of the allowed extensions.
         if (filePart.getSubmittedFileName().endsWith(".jpg") || filePart.getSubmittedFileName().endsWith(".png")) {
