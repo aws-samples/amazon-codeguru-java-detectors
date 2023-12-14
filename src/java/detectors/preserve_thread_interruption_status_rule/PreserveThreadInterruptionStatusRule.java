@@ -31,6 +31,7 @@ public class PreserveThreadInterruptionStatusRule {
                 Thread.sleep(1000L);
             }
         } catch (InterruptedException e) {
+            // Compliant: InterruptedException wrapped and rethrown using RuntimeException and resetting interrupt status.
             Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
